@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: customer-service
+          uri: lb:http://STOCK-SERVICE
+          predicates:
+            - Path=/api/v1/stocks/**
+
+server:
+  port: 8222
