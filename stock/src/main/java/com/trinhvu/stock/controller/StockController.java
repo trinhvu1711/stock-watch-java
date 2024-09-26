@@ -1,10 +1,7 @@
 package com.trinhvu.stock.controller;
 
 import com.trinhvu.stock.service.StockService;
-import com.trinhvu.stock.viewmodel.StockListGetVm;
-import com.trinhvu.stock.viewmodel.StockListVm;
-import com.trinhvu.stock.viewmodel.StockPostVm;
-import com.trinhvu.stock.viewmodel.StocksGetVm;
+import com.trinhvu.stock.viewmodel.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,12 +33,14 @@ public class StockController    {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StocksGetVm> updateStock(@PathVariable Long id, @RequestBody StockPostVm updatedStock) {
-        return ResponseEntity.ok(stockService.updateStock(id, updatedStock));
+    public ResponseEntity<StocksGetVm> updateStock(@PathVariable Long id, @RequestBody StockPutVm updatedStock) {
+        stockService.updateStock(id, updatedStock);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStock(@PathVariable Long id) {
-       return ResponseEntity.ok(stockService.deleteStock(id));
+        stockService.deleteStock(id);
+        return ResponseEntity.noContent().build();
     }
 }

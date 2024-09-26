@@ -1,12 +1,11 @@
 package com.trinhvu.stock.service;
 
+import com.trinhvu.stock.exception.NotFoundException;
 import com.trinhvu.stock.kafka.StockProducer;
 import com.trinhvu.stock.model.Stock;
 import com.trinhvu.stock.repository.StockRepository;
-import com.trinhvu.stock.viewmodel.StockListGetVm;
-import com.trinhvu.stock.viewmodel.StockListVm;
-import com.trinhvu.stock.viewmodel.StockPostVm;
-import com.trinhvu.stock.viewmodel.StocksGetVm;
+import com.trinhvu.stock.utils.Constants;
+import com.trinhvu.stock.viewmodel.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -65,14 +64,30 @@ public class StockService {
     }
 
     public StocksGetVm getStockById(Long id) {
-        return null;
+        Stock stock = stockRepository.findById(id).orElseThrow(() ->new NotFoundException(Constants.ErrorCode.STOCK_NOT_FOUND, id));
+        return StocksGetVm.fromModel(stock);
     }
 
-    public StocksGetVm updateStock(Long id, StockPostVm updatedStock) {
-        return null;
+    public void updateStock(Long id, StockPutVm updatedStock) {
+        Stock stock = stockRepository.findById(id).orElseThrow(() ->new NotFoundException(Constants.ErrorCode.STOCK_NOT_FOUND, id));
+        updateMainStockFromVm(updatedStock, stock);
+        stockRepository.save(stock);
     }
 
-    public Void deleteStock(Long id) {
-        return null;
+    public void deleteStock(Long id) {
+        Stock stock = stockRepository.findById(id).orElseThrow(() ->new NotFoundException(Constants.ErrorCode.STOCK_NOT_FOUND, id));
+        stockRepository.deleteById(id);
+    }
+
+    private void updateMainStockFromVm(StockPutVm stockPutVm, Stock stock) {
+        stock.setSymbol(stockPutVm.symbol());
+        stock.setName(stockPutVm.name());
+        stock.setExchange(stockPutVm.exchange());
+        stock.setCurrentPrice(stockPutVm.currentPrice());
+        stock.setOpenPrice(stockPutVm.openPrice());
+        stock.setClosePrice(stockPutVm.closePrice());
+        stock.setHighPrice(stockPutVm.highPrice());
+        stock.setLowPrice(stockPutVm.lowPrice());
+        stock.setVolume(stockPutVm.volume());
     }
 }
