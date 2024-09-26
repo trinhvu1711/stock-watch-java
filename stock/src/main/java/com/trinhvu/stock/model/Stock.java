@@ -23,4 +23,9 @@ public class Stock extends AbstractAuditEntity{
     private Double highPrice;
     private Double lowPrice;
     private Double volume;
+    private Integer availableQuantity;
+    private boolean isPublished;
+    private boolean isFeatured;
+    private boolean isVisibleIndividually;
+    private boolean stockTrackingEnabled;
 }
