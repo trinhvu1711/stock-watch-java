@@ -3,6 +3,7 @@ package com.trinhvu.stock.controller;
 import com.trinhvu.stock.service.StockService;
 import com.trinhvu.stock.viewmodel.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,8 +47,8 @@ public class StockController    {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/subtract-quantity")
-    public ResponseEntity<Void> subtractStockQuantity(List<StockPurchaseVm> stockPurchaseVms) {
+    @PutMapping(path = "/subtract-quantity", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Void> subtractStockQuantity(@RequestBody List<StockPurchaseVm> stockPurchaseVms) {
         stockService.subtractStockQuantity(stockPurchaseVms);
         return ResponseEntity.noContent().build();
     }
