@@ -3,7 +3,9 @@ package com.trinhvu.order.controller;
 import com.trinhvu.order.service.OrderService;
 import com.trinhvu.order.viewmodel.*;
 import com.trinhvu.order.viewmodel.order.OrderGetVm;
+import com.trinhvu.order.viewmodel.order.OrderListVm;
 import com.trinhvu.order.viewmodel.order.OrderPostVm;
+import com.trinhvu.order.viewmodel.order.OrderVm;
 import com.trinhvu.order.viewmodel.stock.StockListGetVm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +24,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<OrderGetVm> createOrder(@Valid @RequestBody OrderPostVm orderPostVm) {
+    public ResponseEntity<OrderVm> createOrder(@Valid @RequestBody OrderPostVm orderPostVm) {
         return ResponseEntity.ok(orderService.createOrder(orderPostVm));
     }
 
@@ -32,7 +34,7 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<StockListGetVm> getOrders(
+    public ResponseEntity<OrderListVm> getOrders(
             @RequestParam(value = "createdFrom", defaultValue = "#{new java.util.Date(1970-01-01)}", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) ZonedDateTime createdFrom,
             @RequestParam(value = "createdTo", defaultValue = "#{new java.util.Date()}", required = false)
