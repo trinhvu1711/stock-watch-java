@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/stocks")
 @RequiredArgsConstructor
@@ -41,6 +43,12 @@ public class StockController    {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStock(@PathVariable Long id) {
         stockService.deleteStock(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/subtract-quantity")
+    public ResponseEntity<Void> subtractStockQuantity(List<StockPurchaseVm> stockPurchaseVms) {
+        stockService.subtractStockQuantity(stockPurchaseVms);
         return ResponseEntity.noContent().build();
     }
 }

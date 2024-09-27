@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface StockRepository extends JpaRepository<Stock, Long> {
     @Query(value = "SELECT s FROM Stock s WHERE LOWER(s.name) LIKE %:stockName% "
             + "AND (s.symbol IN :stockSymbol OR (:stockSymbol is null OR :stockSymbol = '')) "
@@ -16,4 +18,6 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
     Page<Stock> getStocksWithFilter(@Param("stockName") String stockName,
                                     @Param("stockSymbol") String stockSymbol,
                                     Pageable pageable);
+
+    List<Stock> findAllByIdIn(List<Long> stockIds);
 }
