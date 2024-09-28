@@ -11,6 +11,7 @@
         <module name="stock" />
         <module name="discovery" />
         <module name="gateway" />
+        <module name="order" />
       </profile>
     </annotationProcessing>
   </component>
@@ -19,6 +20,7 @@
       <module name="config-server" options="-parameters" />
       <module name="discovery" options="-parameters" />
       <module name="gateway" options="-parameters" />
+      <module name="order" options="-parameters" />
       <module name="stock" options="-parameters" />
     </option>
   </component>
