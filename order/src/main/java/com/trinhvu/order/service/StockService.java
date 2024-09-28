@@ -21,7 +21,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Service
 @RequiredArgsConstructor
 public class StockService {
-    @Value("${application.config.product-url}")
+    @Value("${application.config.stock-url}")
     private String url;
     private final RestTemplate restTemplate;
     public void subtractStockQuantity(OrderVm orderVm){

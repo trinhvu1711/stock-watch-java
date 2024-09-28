@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @EnableJpaRepositories("com.trinhvu.order.repository")
-@EntityScan("com.trinhvu.stock.model")
+@EntityScan("com.trinhvu.order.model")
 //@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @EnableJpaAuditing
 public class DatabaseAutoConfig {

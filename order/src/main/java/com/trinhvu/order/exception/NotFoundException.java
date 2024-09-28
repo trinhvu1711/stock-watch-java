@@ -1,6 +1,7 @@
 package com.trinhvu.order.exception;
 
-import com.trinhvu.stock.utils.MessagesUtils;
+
+import com.trinhvu.order.utils.MessagesUtils;
 
 public class NotFoundException extends RuntimeException {
 

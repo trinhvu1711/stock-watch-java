@@ -1,8 +1,6 @@
 package com.trinhvu.order.exception;
 
-import com.trinhvu.stock.exception.BadRequestException;
-import com.trinhvu.stock.exception.SignInRequiredException;
-import com.trinhvu.stock.viewmodel.ErrorVm;
+import com.trinhvu.order.viewmodel.ErrorVm;
 import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;

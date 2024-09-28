@@ -6,16 +6,13 @@ import com.trinhvu.order.viewmodel.order.OrderGetVm;
 import com.trinhvu.order.viewmodel.order.OrderListVm;
 import com.trinhvu.order.viewmodel.order.OrderPostVm;
 import com.trinhvu.order.viewmodel.order.OrderVm;
-import com.trinhvu.order.viewmodel.stock.StockListGetVm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.ZonedDateTime;
-import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/orders")
@@ -28,12 +25,12 @@ public class OrderController {
         return ResponseEntity.ok(orderService.createOrder(orderPostVm));
     }
 
-    @GetMapping
+    @GetMapping("/my-orders")
     public ResponseEntity<OrderGetVm> getMyOrders() {
         return ResponseEntity.ok(orderService.getMyOrders());
     }
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<OrderListVm> getOrders(
             @RequestParam(value = "createdFrom", defaultValue = "#{new java.util.Date(1970-01-01)}", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) ZonedDateTime createdFrom,

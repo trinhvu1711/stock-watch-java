@@ -1,12 +1,12 @@
 package com.trinhvu.order.service;
 
 import com.trinhvu.order.exception.NotFoundException;
+import com.trinhvu.order.kafka.OrderProducer;
 import com.trinhvu.order.model.Order;
 import com.trinhvu.order.model.OrderItem;
 import com.trinhvu.order.model.enumeration.OrderStatus;
 import com.trinhvu.order.repository.OrderRepository;
 import com.trinhvu.order.viewmodel.order.*;
-import com.trinhvu.order.viewmodel.stock.StockListGetVm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,7 +25,7 @@ import static com.trinhvu.order.utils.Constants.ErrorCode.ORDER_NOT_FOUND;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final OrderService orderService;
+    private final OrderProducer orderProducer;
     private final StockService stockService;
 
     public OrderVm createOrder(@Valid OrderPostVm orderPostVm) {
@@ -64,6 +63,7 @@ public class OrderService {
 
         // send notification
 
+        orderProducer.orderConfirmation(orderVm);
         acceptOrder(orderVm.id());
         return orderVm;
     }
