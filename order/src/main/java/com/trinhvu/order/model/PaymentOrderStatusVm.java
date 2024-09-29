@@ -1,4 +1,4 @@
-package com.trinhvu.payment.viewmodel;
+package com.trinhvu.order.model;
 
 import lombok.Builder;
 

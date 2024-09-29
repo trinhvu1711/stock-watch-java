@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 public record CapturePayment(
         Long orderId,
+        Long checkOutId,
         BigDecimal amount,
         PaymentMethod paymentMethod,
         PaymentStatus paymentStatus,

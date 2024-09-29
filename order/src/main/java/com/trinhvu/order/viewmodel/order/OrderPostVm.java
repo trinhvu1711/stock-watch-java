@@ -8,14 +8,15 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public record OrderPostVm(
-         String email,
-         String note,
-         int numberItem,
-         BigDecimal totalPrice,
-         OrderStatus orderStatus,
-         PaymentStatus paymentStatus,
-         Long paymentId,
-         @NotNull
-         List<OrderItemPostVm> orderItem
+        String checkoutId,
+        String email,
+        String note,
+        int numberItem,
+        BigDecimal totalPrice,
+        OrderStatus orderStatus,
+        PaymentStatus paymentStatus,
+        Long paymentId,
+        @NotNull
+        List<OrderItemPostVm> orderItem
 ) {
 }

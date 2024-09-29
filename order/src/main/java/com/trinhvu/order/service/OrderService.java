@@ -4,7 +4,9 @@ import com.trinhvu.order.exception.NotFoundException;
 import com.trinhvu.order.kafka.OrderProducer;
 import com.trinhvu.order.model.Order;
 import com.trinhvu.order.model.OrderItem;
+import com.trinhvu.order.model.PaymentOrderStatusVm;
 import com.trinhvu.order.model.enumeration.OrderStatus;
+import com.trinhvu.order.model.enumeration.PaymentStatus;
 import com.trinhvu.order.repository.OrderRepository;
 import com.trinhvu.order.viewmodel.order.*;
 import jakarta.validation.Valid;
@@ -37,6 +39,7 @@ public class OrderService {
                 .orderStatus(orderPostVm.orderStatus())
                 .paymentStatus(orderPostVm.paymentStatus())
                 .paymentId(orderPostVm.paymentId())
+                .checkoutId(orderPostVm.checkoutId())
                 .build();
 
         orderRepository.save(order);
@@ -95,5 +98,30 @@ public class OrderService {
         Order order = orderRepository.findById(orderId).orElseThrow(()-> new NotFoundException(ORDER_NOT_FOUND, orderId));
         order.setOrderStatus(OrderStatus.ACCEPTED);
         this.orderRepository.save(order);
+    }
+
+    public PaymentOrderStatusVm updateOrderPaymentStatus(@Valid PaymentOrderStatusVm paymentOrderStatusVm) {
+        var order = this.orderRepository
+                .findById(paymentOrderStatusVm.orderId())
+                .orElseThrow(() -> new NotFoundException(ORDER_NOT_FOUND, paymentOrderStatusVm.orderId()));
+
+        order.setPaymentId(paymentOrderStatusVm.paymentId());
+        String paymentStatus = paymentOrderStatusVm.paymentStatus();
+        order.setOrderStatus(OrderStatus.valueOf(paymentStatus));
+        if (PaymentStatus.COMPLETED.name().equals(paymentStatus)) {
+            order.setOrderStatus(OrderStatus.COMPLETED);
+        }
+        Order result = this.orderRepository.save(order);
+        return PaymentOrderStatusVm.builder()
+                .orderId(result.getId())
+                .orderStatus(result.getOrderStatus().getName())
+                .paymentStatus(paymentOrderStatusVm.paymentStatus())
+                .paymentId(paymentOrderStatusVm.paymentId())
+                .build();
+    }
+
+    public Order findOrderByCheckoutId(String checkoutId) {
+        return this.orderRepository.findByCheckoutId(checkoutId)
+                .orElseThrow(() -> new NotFoundException(ORDER_NOT_FOUND,"of checkout id " + checkoutId));
     }
 }
