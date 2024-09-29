@@ -7,6 +7,7 @@ public record PaymentOrderStatusVm(
         Long orderId,
         String orderStatus,
         Long paymentId,
-        String paymentStatus
+        String paymentStatus,
+        String email
 ) {
 }

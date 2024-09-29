@@ -1,5 +1,6 @@
 package com.trinhvu.order.kafka;
 
+import com.trinhvu.order.viewmodel.order.OrderConfirmation;
 import com.trinhvu.order.viewmodel.order.OrderGetVm;
 import com.trinhvu.order.viewmodel.order.OrderVm;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +15,11 @@ import static org.springframework.kafka.support.KafkaHeaders.TOPIC;
 @RequiredArgsConstructor
 @Slf4j
 public class OrderProducer {
-    private final KafkaTemplate<String, OrderVm> kafkaTemplate;
+    private final KafkaTemplate<String, OrderConfirmation> kafkaTemplate;
 
-    public void orderConfirmation(OrderVm orderVm) {
+    public void orderConfirmation(OrderConfirmation orderVm) {
         log.info("Order confirmation");
-        Message<OrderVm> message = MessageBuilder
+        Message<OrderConfirmation> message = MessageBuilder
                 .withPayload(orderVm)
                 .setHeader(TOPIC, "order-topic")
                 .build();

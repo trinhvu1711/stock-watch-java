@@ -1,6 +1,6 @@
 package com.trinhvu.payment.kafka;
 
-import com.trinhvu.payment.viewmodel.PaymentOrderStatusVm;
+import com.trinhvu.payment.viewmodel.PaymentConfirmation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -14,11 +14,11 @@ import static org.springframework.kafka.support.KafkaHeaders.TOPIC;
 @RequiredArgsConstructor
 @Slf4j
 public class PaymentProducer {
-    private final KafkaTemplate<String, PaymentOrderStatusVm> kafkaTemplate;
+    private final KafkaTemplate<String, PaymentConfirmation> kafkaTemplate;
 
-    public void paymentConfirmation(PaymentOrderStatusVm paymentOrderStatusVm) {
+    public void paymentConfirmation(PaymentConfirmation paymentOrderStatusVm) {
         log.info("Order confirmation");
-        Message<PaymentOrderStatusVm> message = MessageBuilder
+        Message<PaymentConfirmation> message = MessageBuilder
                 .withPayload(paymentOrderStatusVm)
                 .setHeader(TOPIC, "payment-topic")
                 .build();

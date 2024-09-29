@@ -4,6 +4,7 @@ import com.trinhvu.payment.kafka.PaymentProducer;
 import com.trinhvu.payment.model.Payment;
 import com.trinhvu.payment.repository.PaymentRepository;
 import com.trinhvu.payment.viewmodel.CapturePayment;
+import com.trinhvu.payment.viewmodel.PaymentConfirmation;
 import com.trinhvu.payment.viewmodel.PaymentOrderStatusVm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,20 @@ public class PaymentService {
                         .paymentStatus(payment.getPaymentStatus().name())
                         .build();
 
-        paymentProducer.paymentConfirmation(paymentOrderStatusVm);
-        return orderService.updateOrderStatus(paymentOrderStatusVm);
+        PaymentOrderStatusVm result = orderService.updateOrderStatus(paymentOrderStatusVm);
+
+        PaymentConfirmation paymentConfirmation = PaymentConfirmation.builder()
+                .orderId(orderId)
+                .checkOutId(payment.getCheckOutId())
+                .amount(payment.getAmount())
+                .paymentMethod(payment.getPaymentMethod())
+                .paymentStatus(payment.getPaymentStatus())
+                .failureMessage(payment.getFailureMessage())
+                .email(result.email())
+                .build();
+        paymentProducer.paymentConfirmation(paymentConfirmation);
+
+        return result;
     }
 
     public Payment createPayment(CapturePayment capturePayment) {

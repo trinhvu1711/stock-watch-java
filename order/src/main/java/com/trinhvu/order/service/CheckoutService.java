@@ -26,7 +26,6 @@ import static com.trinhvu.order.utils.Constants.ErrorCode.CHECKOUT_NOT_FOUND;
 public class CheckoutService {
     private final CheckoutRepository checkoutRepository;
     private final OrderService orderService;
-
     public CheckoutVm createCheckOut(CheckoutPostVm checkoutPostVm) {
         Checkout checkout = Checkout.builder()
                 .email(checkoutPostVm.email())

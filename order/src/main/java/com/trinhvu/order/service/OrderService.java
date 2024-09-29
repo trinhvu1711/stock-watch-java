@@ -60,13 +60,12 @@ public class OrderService {
 
         // subtract quantity
         stockService.subtractStockQuantity(orderVm);
-        // payment
 
         // remove from cart
 
         // send notification
-
-        orderProducer.orderConfirmation(orderVm);
+        OrderConfirmation orderConfirmation = OrderConfirmation.fromModel(order);
+        orderProducer.orderConfirmation(orderConfirmation);
         acceptOrder(orderVm.id());
         return orderVm;
     }
@@ -117,6 +116,7 @@ public class OrderService {
                 .orderStatus(result.getOrderStatus().getName())
                 .paymentStatus(paymentOrderStatusVm.paymentStatus())
                 .paymentId(paymentOrderStatusVm.paymentId())
+                .email(result.getEmail())
                 .build();
     }
 
