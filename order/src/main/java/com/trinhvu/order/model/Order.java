@@ -30,4 +30,5 @@ public class Order extends AbstractAuditEntity {
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
     private Long paymentId;
+    private String checkoutId;
 }

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.ZonedDateTime;
+import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT o FROM Order o JOIN o.orderItems oi "
@@ -21,4 +22,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             @Param("createdFrom") ZonedDateTime createdFrom,
             @Param("createdTo") ZonedDateTime createdTo,
             Pageable pageable);
+
+    Optional<Order> findByCheckoutId(String checkoutId);
 }

@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment
+    username: trinhvu
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: paymentOrderStatusVm:com.trinhvu.payment.viewmodel.PaymentOrderStatusVm
+server:
+  port: 8070
+
+application:
+  config:
+    stock-url: http://localhost:8050/api/v1/stocks
+    customer-url: http://localhost:8222/api/v1/customers
+    payment-url: http://localhost:8222/api/v1/payments
+    order-url: http://localhost:8060/api/v1/orders
+    checkout-url: http://localhost:8060/api/v1/checkouts
+
