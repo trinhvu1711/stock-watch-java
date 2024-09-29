@@ -1,7 +1,7 @@
 package com.trinhvu.payment.exception;
 
 
-import com.trinhvu.order.utils.MessagesUtils;
+import com.trinhvu.payment.utils.MessagesUtils;
 
 public class Forbidden extends RuntimeException {
     private String message;

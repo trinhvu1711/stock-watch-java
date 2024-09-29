@@ -1,9 +1,6 @@
 package com.trinhvu.payment.exception;
 
-import com.trinhvu.order.exception.BadRequestException;
-import com.trinhvu.order.exception.Forbidden;
-import com.trinhvu.order.exception.NotFoundException;
-import com.trinhvu.order.viewmodel.ErrorVm;
+import com.trinhvu.payment.viewmodel.ErrorVm;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

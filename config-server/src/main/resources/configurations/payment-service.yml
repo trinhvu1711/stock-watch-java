@@ -23,4 +23,7 @@ application:
   config:
     stock-url: http://localhost:8050/api/v1/stocks
     customer-url: http://localhost:8222/api/v1/customers
-    order-url: http://localhost:8222/api/v1/orders
+    payment-url: http://localhost:8222/api/v1/payments
+    order-url: http://localhost:8060/api/v1/orders
+    checkout-url: http://localhost:8060/api/v1/checkouts
+

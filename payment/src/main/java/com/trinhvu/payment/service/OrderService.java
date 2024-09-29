@@ -20,6 +20,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class OrderService {
     @Value("${application.config.order-url}")
     private String url;
+    @Value("${application.config.checkout-url}")
+    private String checkoutUrl;
     private final RestTemplate restTemplate;
 
     public PaymentOrderStatusVm updateOrderStatus(PaymentOrderStatusVm paymentOrderStatusVm){
@@ -42,7 +44,7 @@ public class OrderService {
         HttpEntity<CapturePayment> requestEntity = new HttpEntity<>(capturePayment ,headers);
         ParameterizedTypeReference<Long> responseType = new ParameterizedTypeReference<>() {};
         ResponseEntity<Long> responseEntity = restTemplate.exchange(
-                url + "/checkouts/status",
+                checkoutUrl + "/status",
                 PUT,
                 requestEntity,
                 responseType

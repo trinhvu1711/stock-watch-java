@@ -12,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "checkout")
+@Table(name = "checkouts")
 public class Checkout {
     @Id
     private String id;

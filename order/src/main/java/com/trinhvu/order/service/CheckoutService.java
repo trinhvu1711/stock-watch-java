@@ -6,7 +6,6 @@ import com.trinhvu.order.model.CheckoutItem;
 import com.trinhvu.order.model.Order;
 import com.trinhvu.order.model.enumeration.CheckoutState;
 import com.trinhvu.order.repository.CheckoutRepository;
-import com.trinhvu.order.utils.Constants;
 import com.trinhvu.order.viewmodel.checkout.CheckoutPostVm;
 import com.trinhvu.order.viewmodel.checkout.CheckoutPutVm;
 import com.trinhvu.order.viewmodel.checkout.CheckoutVm;

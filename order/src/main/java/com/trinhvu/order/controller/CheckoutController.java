@@ -6,10 +6,7 @@ import com.trinhvu.order.viewmodel.checkout.CheckoutPutVm;
 import com.trinhvu.order.viewmodel.checkout.CheckoutVm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,12 +15,12 @@ public class CheckoutController {
     private final CheckoutService checkoutService;
 
     @PostMapping
-    public ResponseEntity<CheckoutVm> createCheckOut(CheckoutPostVm checkoutPostVm) {
+    public ResponseEntity<CheckoutVm> createCheckOut(@RequestBody CheckoutPostVm checkoutPostVm) {
         return ResponseEntity.ok(checkoutService.createCheckOut(checkoutPostVm));
     }
 
     @PutMapping("/status")
-    public ResponseEntity<Long> updateCheckoutStatus(CheckoutPutVm checkoutPutVm) {
+    public ResponseEntity<Long> updateCheckoutStatus(@RequestBody CheckoutPutVm checkoutPutVm) {
         return ResponseEntity.ok(checkoutService.updateCheckoutStatus(checkoutPutVm));
     }
 }

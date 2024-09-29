@@ -3,7 +3,6 @@ package com.trinhvu.order.viewmodel.checkout;
 import com.trinhvu.order.model.Checkout;
 import com.trinhvu.order.model.enumeration.CheckoutState;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 

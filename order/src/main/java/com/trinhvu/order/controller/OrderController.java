@@ -2,7 +2,6 @@ package com.trinhvu.order.controller;
 
 import com.trinhvu.order.model.PaymentOrderStatusVm;
 import com.trinhvu.order.service.OrderService;
-import com.trinhvu.order.viewmodel.*;
 import com.trinhvu.order.viewmodel.order.OrderGetVm;
 import com.trinhvu.order.viewmodel.order.OrderListVm;
 import com.trinhvu.order.viewmodel.order.OrderPostVm;
@@ -31,14 +30,13 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getMyOrders());
     }
 
-    @PutMapping("/status")
+    @PutMapping("/checkouts/status")
     public ResponseEntity<PaymentOrderStatusVm> updateOrderPaymentStatus(
             @Valid @RequestBody PaymentOrderStatusVm paymentOrderStatusVm
     ) {
         PaymentOrderStatusVm orderStatusVm = orderService.updateOrderPaymentStatus(paymentOrderStatusVm);
         return ResponseEntity.ok(orderStatusVm);
     }
-
 
     @GetMapping()
     public ResponseEntity<OrderListVm> getOrders(
