@@ -9,13 +9,13 @@ spring:
       ddl-auto: update
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-#  kafka:
-#    producer:
-#      bootstrap-servers: localhost:9092
-#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-#      properties:
-#        spring.json.type.mapping: orderVm:com.trinhvu.order.viewmodel.order.OrderVm
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: paymentOrderStatusVm:com.trinhvu.payment.viewmodel.PaymentOrderStatusVm
 server:
   port: 8070
 

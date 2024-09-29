@@ -1,6 +1,7 @@
 package com.trinhvu.payment.service;
 
 import com.trinhvu.payment.viewmodel.CapturePayment;
+import com.trinhvu.payment.viewmodel.CheckoutPutVm;
 import com.trinhvu.payment.viewmodel.PaymentOrderStatusVm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +31,7 @@ public class OrderService {
         HttpEntity<PaymentOrderStatusVm> requestEntity = new HttpEntity<>(paymentOrderStatusVm ,headers);
         ParameterizedTypeReference<PaymentOrderStatusVm> responseType = new ParameterizedTypeReference<>() {};
         ResponseEntity<PaymentOrderStatusVm> responseEntity = restTemplate.exchange(
-                url + "/status",
+                url + "/checkouts/status",
                 PUT,
                 requestEntity,
                 responseType
@@ -41,7 +42,8 @@ public class OrderService {
     public Long updateCheckOutStatus(CapturePayment capturePayment){
         HttpHeaders headers = new HttpHeaders();
         headers.set(CONTENT_TYPE, APPLICATION_JSON_VALUE);
-        HttpEntity<CapturePayment> requestEntity = new HttpEntity<>(capturePayment ,headers);
+        CheckoutPutVm checkoutPutVm = new CheckoutPutVm(capturePayment.checkOutId(), capturePayment.paymentStatus().name());
+        HttpEntity<CheckoutPutVm> requestEntity = new HttpEntity<>(checkoutPutVm ,headers);
         ParameterizedTypeReference<Long> responseType = new ParameterizedTypeReference<>() {};
         ResponseEntity<Long> responseEntity = restTemplate.exchange(
                 checkoutUrl + "/status",
