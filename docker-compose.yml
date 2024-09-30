@@ -29,6 +29,14 @@ services:
       - rs-net
     restart: unless-stopped
 
+  zipkin:
+    container_name: rs_zipkin
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - rs-net
+
   mongodb:
     image: mongo
     container_name: rs_java_mongo_db

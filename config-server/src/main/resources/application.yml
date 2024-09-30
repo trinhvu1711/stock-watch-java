@@ -10,3 +10,8 @@ spring:
       server:
         native:
           search-locations: classpath:/configurations
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0

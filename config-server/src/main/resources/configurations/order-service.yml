@@ -21,6 +21,5 @@ server:
 
 application:
   config:
-    stock-url: http://localhost:8050/api/v1/stocks
-    customer-url: http://localhost:8222/api/v1/customers
+    stock-url: http://localhost:8222/api/v1/stocks
     payment-url: http://localhost:8222/api/v1/payments
