@@ -40,6 +40,7 @@ public class OrderService {
                 .paymentStatus(orderPostVm.paymentStatus())
                 .paymentId(orderPostVm.paymentId())
                 .checkoutId(orderPostVm.checkoutId())
+                .totalPrice(orderPostVm.totalPrice())
                 .build();
 
         orderRepository.save(order);

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Confirmation</title>
+    <title>Order Details</title>
 
     <style>
         body {
@@ -16,7 +16,7 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
             background-color: #fff;
@@ -28,18 +28,21 @@
             color: #333;
         }
 
-        p {
-            color: #555;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
 
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            color: #fff;
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
             background-color: #007BFF;
-            border-radius: 5px;
+            color: #fff;
         }
 
         .footer {
@@ -53,15 +56,31 @@
 
 <body>
 <div class="container">
-    <h1>Payment Confirmation</h1>
-    <p>Dear <span th:text="${customerName}"></span>,</p>
-    <p>Your payment of $<span th:text="${amount}"></span> has been successfully processed.</p>
-    <p>Order reference: <span th:text="${orderReference}"></span></p>
-    <p>Thank you for choosing our service. If you have any questions, feel free to contact us.</p>
+    <h1>Order Details</h1>
+    <p>Customer: <span th:text="${customerName}"></span></p>
+    <p>Order ID: <span th:text="${orderReference}"></span></p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Stock Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="stock : ${stocks}">
+            <td th:text="${stock.stockName}"></td>
+            <td th:text="${stock.quantity}"></td>
+            <td th:text="${stock.stockPrice}"></td>
+        </tr>
+        </tbody>
+    </table>
 
     <div class="footer">
+        <p>Total Amount: $<span th:text="${totalAmount}"></span></p>
         <p>This is an automated message. Please do not reply to this email.</p>
-        <p>&copy; 2024 AlibouCoding. All rights reserved.</p>
+        <p>All rights reserved.</p>
     </div>
 </div>
 </body>
