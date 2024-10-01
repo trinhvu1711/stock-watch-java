@@ -1,6 +1,9 @@
 package com.trinhvu.cart.viewmodel;
 
-public record CartItemVm(
+import java.util.List;
+
+public record CartDetailVm(
+        Long id,
         int quantity,
         Long stockId
 ) {

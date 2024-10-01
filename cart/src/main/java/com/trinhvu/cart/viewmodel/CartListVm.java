@@ -1,4 +1,7 @@
 package com.trinhvu.cart.viewmodel;
 
-public record CartListVm() {
+public record CartListVm(
+        Long id,
+        String customerId
+) {
 }

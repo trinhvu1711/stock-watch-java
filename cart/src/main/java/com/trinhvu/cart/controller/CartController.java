@@ -16,7 +16,7 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping
-    public ResponseEntity<CartGetDetailVm> createCart(@RequestBody CartItemVm cartItemVm) {
+    public ResponseEntity<CartGetDetailVm> createCart(@RequestBody List<CartItemVm> cartItemVm) {
         return ResponseEntity.ok(cartService.createCart(cartItemVm));
     }
 
