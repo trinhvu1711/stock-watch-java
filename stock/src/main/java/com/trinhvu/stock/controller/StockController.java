@@ -1,5 +1,6 @@
 package com.trinhvu.stock.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.trinhvu.stock.service.StockService;
 import com.trinhvu.stock.viewmodel.*;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +25,9 @@ public class StockController    {
     public ResponseEntity<StockListGetVm> listStocks(
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize,
-            @RequestParam(value = "stock-symbol", defaultValue = "", required = false) String stockSymbol,
-            @RequestParam(value = "stock-name", defaultValue = "", required = false) String stockName
-    ) {
+            @RequestParam(value = "stockSymbol", defaultValue = "", required = false) String stockSymbol,
+            @RequestParam(value = "stockName", defaultValue = "", required = false) String stockName
+    ) throws JsonProcessingException {
         return ResponseEntity.ok(stockService.getStocksWithFilter(pageNo, pageSize, stockSymbol, stockName));
     }
 
