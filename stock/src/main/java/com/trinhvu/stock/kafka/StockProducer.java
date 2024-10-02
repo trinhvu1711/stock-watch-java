@@ -1,6 +1,7 @@
 package com.trinhvu.stock.kafka;
 
 import com.trinhvu.stock.viewmodel.StocksGetVm;
+import com.trinhvu.stock.viewmodel.StocksPriceGetVm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -19,10 +20,17 @@ public class StockProducer {
         log.info("Adding stock successfully");
         Message<StocksGetVm> message = MessageBuilder
                 .withPayload(stocks)
-                .setHeader(TOPIC, "stock-topic")
+                .setHeader(TOPIC, "add-stock-topic")
                 .build();
         kafkaTemplate.send(message);
     }
 
-
+    public void sendStockPriceUpdate(StocksGetVm stocks) {
+        log.info("Update stock price successfully");
+        Message<StocksGetVm> message = MessageBuilder
+                .withPayload(stocks)
+                .setHeader(TOPIC, "stock-price-updates")
+                .build();
+        kafkaTemplate.send(message);
+    }
 }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Updates</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+</head>
+<body>
+<h1>Live Stock Price Updates</h1>
+<div id="stockPriceUpdates"></div>
+
+<script>
+    // Connect to the WebSocket server
+    const socket = new SockJS('/ws'); // Adjust the URL if necessary
+    const stompClient = Stomp.over(socket);
+
+    // Connect to the WebSocket
+    stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+
+        // Subscribe to the stock price update topic
+        stompClient.subscribe('/topic/stock-price', function (message) {
+            const stockData = JSON.parse(message.body);
+            displayStockPrice(stockData);
+        });
+    });
+
+    // Function to display stock price updates
+    function displayStockPrice(stock) {
+        const updatesDiv = document.getElementById('stockPriceUpdates');
+        const stockInfo = `
+                <div>
+                    <strong>Symbol:</strong> ${stock.symbol} <br>
+                    <strong>Open Price:</strong> ${stock.openPrice} <br>
+                    <strong>Close Price:</strong> ${stock.closePrice} <br>
+                    <strong>High Price:</strong> ${stock.highPrice} <br>
+                    <strong>Low Price:</strong> ${stock.lowPrice} <br>
+                    <strong>Volume:</strong> ${stock.volume} <br>
+                    <strong>Timestamp:</strong> ${new Date(stock.timestamp).toLocaleString()} <br>
+                </div>
+                <hr>
+            `;
+        updatesDiv.innerHTML += stockInfo;
+    }
+</script>
+</body>
+</html>

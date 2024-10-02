@@ -3,6 +3,8 @@ package com.trinhvu.stock.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -11,6 +13,8 @@ import lombok.*;
 @Builder
 @Table(name = "stocks")
 public class Stock extends AbstractAuditEntity{
+    @OneToMany(mappedBy = "stockId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    Set<StockPrice> stockPrices;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

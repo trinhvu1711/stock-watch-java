@@ -30,7 +30,7 @@ public class StockService {
         Stock mainStock = builMaindStock(stockPostVm);
         Stock savedStock = stockRepository.save(mainStock);
         StocksGetVm stocksGetVm = StocksGetVm.fromModel(savedStock);
-        stockProducer.processStock(stocksGetVm);
+//        stockProducer.processStock(stocksGetVm);
         return stocksGetVm;
     }
 

@@ -9,6 +9,10 @@ spring:
           uri: lb:http://STOCK-SERVICE
           predicates:
             - Path=/api/v1/stocks/**
+        - id: stock-price-service
+          uri: lb:http://STOCK-SERVICE
+          predicates:
+            - Path=/api/v1/stock-price/**
         - id: payment-service
           uri: lb:http://PAYMENT-SERVICE
           predicates:
