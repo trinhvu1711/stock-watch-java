@@ -3,6 +3,7 @@ package com.trinhvu.stock.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Entity
@@ -21,7 +22,7 @@ public class StockPrice extends AbstractAuditEntity{
     private Double highPrice;
     private Double lowPrice;
     private Double volume;
-    private ZonedDateTime timestamp;
+    private LocalDateTime timestamp;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stockId", referencedColumnName = "id")

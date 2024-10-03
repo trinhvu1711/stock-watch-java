@@ -1,6 +1,6 @@
 package com.trinhvu.stock.viewmodel;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 public record StocksPricePostVm(
         Double openPrice,
@@ -8,6 +8,6 @@ public record StocksPricePostVm(
         Double highPrice,
         Double lowPrice,
         Double volume,
-        ZonedDateTime timestamp
+        LocalDateTime timestamp
 ) {
 }
