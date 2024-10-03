@@ -53,4 +53,11 @@ public class StockPriceService {
     }
 
 
+    public StocksPriceGetVm getLastPrice(String stockSymbol) {
+        return null;
+    }
+
+    public StocksPriceGetVm addStockPrice(StocksPricePostVm stockPostVm) {
+        return null;
+    }
 }
