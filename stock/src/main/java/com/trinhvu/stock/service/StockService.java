@@ -1,5 +1,6 @@
 package com.trinhvu.stock.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.trinhvu.stock.exception.NotFoundException;
 import com.trinhvu.stock.kafka.StockProducer;
 import com.trinhvu.stock.model.Stock;
@@ -23,12 +24,13 @@ import java.util.stream.Collectors;
 public class StockService {
     private final StockRepository stockRepository;
     private final StockProducer stockProducer;
+    private final StockRedisService stockRedisService;
 
     public StocksGetVm addStock(StockPostVm stockPostVm) {
         Stock mainStock = builMaindStock(stockPostVm);
         Stock savedStock = stockRepository.save(mainStock);
         StocksGetVm stocksGetVm = StocksGetVm.fromModel(savedStock);
-        stockProducer.processStock(stocksGetVm);
+//        stockProducer.processStock(stocksGetVm);
         return stocksGetVm;
     }
 
@@ -46,14 +48,21 @@ public class StockService {
                 .build();
     }
 
-    public StockListGetVm getStocksWithFilter(int pageNo, int pageSize, String symbol, String name) {
+    public StockListGetVm getStocksWithFilter(int pageNo, int pageSize, String symbol, String name) throws JsonProcessingException {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
-        Page<Stock> stockPage;
+        Page<Stock> stockPage = stockRedisService.getAllStocks(symbol, name, pageable);
+        if (stockPage == null || stockPage.isEmpty()) {
+            stockPage = stockRepository.getStocksWithFilter(name.trim().toLowerCase(), symbol.trim(), pageable);
+            // Lấy tổng số trang
+            stockRedisService.saveAllProducts(
+                    stockPage.getContent(),
+                    symbol,
+                    name,
+                    pageable
+            );
+        }
 
-        stockPage = stockRepository.getStocksWithFilter(name.trim().toLowerCase(), symbol.trim(), pageable);
-
-        List<Stock> stocks = stockPage.getContent();
-        List<StockListVm> stockListVmList = stocks.stream()
+        List<StockListVm> stockListVmList = stockPage.getContent().stream()
                 .map(StockListVm::fromModel)
                 .toList();
 
@@ -138,7 +147,7 @@ public class StockService {
     }
 
     private BiFunction<Long, Long, Long> subtractStockQuantity() {
-        return (totalQuantity, amount) ->{
+        return (totalQuantity, amount) -> {
             long result = totalQuantity - amount;
             return result < 0 ? 0 : result;
         };

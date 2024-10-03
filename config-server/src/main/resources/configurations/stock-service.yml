@@ -16,11 +16,24 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
         spring.json.type.mapping: stocksGetVm:com.trinhvu.stock.viewmodel.StocksGetVm
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: stock_group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+        spring.json.type.mapping: stocksGetVm:com.trinhvu.stock.viewmodel.StocksGetVm
+  redis:
+    host: localhost
+    port: 6379
 server:
   port: 8050
 
 application:
   config:
-    stock-url: https://api.polygon.io/v3/reference/tickers
     customer-url: http://localhost:8222/api/v1/customers
     payment-url: http://localhost:8222/api/v1/payments
+    alpha-vantage-url: https://www.alphavantage.co
+    api-key: LLD9XG573FUU3OCH

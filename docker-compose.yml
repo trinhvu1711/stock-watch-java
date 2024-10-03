@@ -98,6 +98,17 @@ services:
       - 1080:1080
       - 1025:1025
 
+  redis-container:
+    image: docker.io/redis:7.2.3
+    container_name: rs-redis
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis-data:/data
+    networks:
+      - rs-net
+
 networks:
   rs-net:
     driver: bridge

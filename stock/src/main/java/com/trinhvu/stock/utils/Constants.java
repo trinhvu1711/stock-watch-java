@@ -23,7 +23,7 @@ public final class Constants {
         public static final String ENSURE_STOCK_ATTRIBUTE_GROUP_HAS_NO_ATTRIBUTES =
                 "Ensure stock attribute group has no stock attributes";
         public static final String SYMBOL_ALREADY_EXISTS = "SYMBOL_ALREADY_EXISTS";
-        public static final String STOCK_HAS_NO_VARIATIONS = "STOCK_HAS_NO_VARIATIONS";
+        public static final String STOCK_HAS_NO_UPDATED_PRICE = "STOCK_HAS_NO_UPDATED_PRICE";
         public static final String SYMBOL_ALREADY_EXISTS_OR_DUPLICATED = "SYMBOL_ALREADY_EXISTS_OR_DUPLICATED";
         public static final String SKU_ALREADY_EXISTS_OR_DUPLICATED = "SKU_ALREADY_EXISTS_OR_DUPLICATED";
         public static final String ISIN_ALREADY_EXISTS_OR_DUPLICATED = "ISIN_ALREADY_EXISTS_OR_DUPLICATED";
