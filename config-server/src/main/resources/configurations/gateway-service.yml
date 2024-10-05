@@ -1,4 +1,20 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9098/realms/st
+#      client:
+#        provider:
+#          keycloak:
+#            issuer-uri: http://localhost:9098/realms/stock-watch
+#        registration:
+#          api-client:
+#            provider: keycloak
+#            client-id: stock-watch-api
+#            client-secret: 9sJAzYqZy6hUf2lIK1JrMaCYDNS7WEGF
+#            scope: openid, profile, email, roles
+#            redirect-uri: *
   cloud:
     gateway:
       discovery:
