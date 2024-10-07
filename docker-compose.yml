@@ -74,6 +74,7 @@ services:
       - "22181:2181"
     networks:
       - rs-net
+
   kafka:
     image: confluentinc/cp-kafka:latest
     container_name: rs_java_kafka
@@ -109,6 +110,18 @@ services:
     networks:
       - rs-net
 
+  keycloak:
+    container_name: rs_keycloak
+    image: quay.io/keycloak/keycloak:24.0.2
+    ports:
+      - 9098:8080
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    networks:
+      - rs-net
+    command:
+      - "start-dev"
 networks:
   rs-net:
     driver: bridge
