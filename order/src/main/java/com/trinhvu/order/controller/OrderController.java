@@ -1,6 +1,6 @@
 package com.trinhvu.order.controller;
 
-import com.trinhvu.order.model.PaymentOrderStatusVm;
+import com.trinhvu.order.viewmodel.order.PaymentOrderStatusVm;
 import com.trinhvu.order.service.OrderService;
 import com.trinhvu.order.viewmodel.order.OrderGetVm;
 import com.trinhvu.order.viewmodel.order.OrderListVm;

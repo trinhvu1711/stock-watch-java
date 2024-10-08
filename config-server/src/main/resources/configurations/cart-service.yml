@@ -1,4 +1,9 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9098/realms/st
   datasource:
     url: jdbc:postgresql://localhost:5432/cart
     username: trinhvu
@@ -21,6 +26,5 @@ server:
 
 application:
   config:
-    stock-url: https://api.polygon.io/v3/reference/tickers
     customer-url: http://localhost:8222/api/v1/customers
     payment-url: http://localhost:8222/api/v1/payments
