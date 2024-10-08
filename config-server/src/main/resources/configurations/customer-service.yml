@@ -1,0 +1,15 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9098/realms/st
+server:
+  port: 8088
+
+keycloak:
+  auth-server-url: http://localhost:9098
+  realm: st
+  resource: stock-watch-api
+  credentials:
+    secret: 1b7NQNLu98FkCGubTNUiUfTmAmAarvpB

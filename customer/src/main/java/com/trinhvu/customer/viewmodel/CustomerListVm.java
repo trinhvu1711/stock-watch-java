@@ -1,4 +1,6 @@
 package com.trinhvu.customer.viewmodel;
 
-public record CustomerListVm() {
+import java.util.List;
+
+public record CustomerListVm(int totalUser, List<CustomerAdminVm> customerVms, int totalPage) {
 }
