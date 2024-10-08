@@ -1,10 +1,7 @@
 package com.trinhvu.customer.controller;
 
 import com.trinhvu.customer.service.CustomerService;
-import com.trinhvu.customer.viewmodel.CustomerAdminVm;
-import com.trinhvu.customer.viewmodel.CustomerListVm;
-import com.trinhvu.customer.viewmodel.CustomerPutVm;
-import com.trinhvu.customer.viewmodel.CustomerVm;
+import com.trinhvu.customer.viewmodel.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,7 +31,7 @@ public class CustomerController {
     }
 
     @PostMapping("/guest-user")
-    public ResponseEntity<CustomerVm> createGuestUser() {
+    public ResponseEntity<GuestVm> createGuestUser() {
         return ResponseEntity.ok(customerService.createGuestUser());
     }
 
