@@ -7,6 +7,7 @@ import com.trinhvu.customer.viewmodel.CustomerPutVm;
 import com.trinhvu.customer.viewmodel.CustomerVm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,14 +23,14 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.getCustomers(pageNo));
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/find-by-email/{email}")
     public ResponseEntity<CustomerAdminVm> getCustomerByEmail(@PathVariable String email) {
         return ResponseEntity.ok(customerService.getCustomerByEmail(email));
     }
 
     @GetMapping("/profile")
     public ResponseEntity<CustomerVm> getCustomerByEmail() {
-        return ResponseEntity.ok(customerService.getCustomerProfile());
+        return ResponseEntity.ok(customerService.getCustomerProfile(SecurityContextHolder.getContext().getAuthentication().getName()));
     }
 
     @PostMapping("/guest-user")

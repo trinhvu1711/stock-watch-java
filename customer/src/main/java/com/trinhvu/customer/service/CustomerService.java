@@ -1,7 +1,10 @@
 package com.trinhvu.customer.service;
 
 import com.trinhvu.customer.config.KeycloakPropsConfig;
+import com.trinhvu.customer.exception.BadRequestException;
 import com.trinhvu.customer.exception.Forbidden;
+import com.trinhvu.customer.exception.NotFoundException;
+import com.trinhvu.customer.utils.Constants;
 import com.trinhvu.customer.viewmodel.CustomerAdminVm;
 import com.trinhvu.customer.viewmodel.CustomerListVm;
 import com.trinhvu.customer.viewmodel.CustomerPutVm;
@@ -10,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RealmRepresentation;
+import org.keycloak.representations.idm.UserRepresentation;
+import org.keycloak.utils.EmailValidationUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,7 +38,6 @@ public class CustomerService {
 
     public CustomerListVm getCustomers(int pageNo) {
         try {
-            System.out.println(isConnected());
             List<CustomerAdminVm> result = keycloak.realm(keycloakPropsConfig.getRealm()).users()
                     .search(null, pageNo * USER_PER_PAGE, USER_PER_PAGE).stream()
                     .map(CustomerAdminVm::fromModel)
@@ -47,11 +51,31 @@ public class CustomerService {
     }
 
     public CustomerAdminVm getCustomerByEmail(String email) {
-        return null;
+        try {
+            if (EmailValidationUtil.isValidEmail(email)) {
+                List<UserRepresentation> result = keycloak.realm(keycloakPropsConfig.getRealm()).users()
+                        .searchByEmail(email, true);
+                if (result.isEmpty()) {
+                    throw new NotFoundException(Constants.ErrorCode.USER_WITH_EMAIL_NOT_FOUND, email);
+                }
+                return CustomerAdminVm.fromModel(result.get(0));
+            }else {
+                throw new BadRequestException(Constants.ErrorCode.WRONG_EMAIL_FORMAT, email);
+            }
+        }catch (Forbidden e){
+            throw new Forbidden(ERROR_FORMAT, e.getMessage(), keycloakPropsConfig.getResource());
+        }
     }
 
-    public CustomerVm getCustomerProfile() {
-        return null;
+    public CustomerVm getCustomerProfile(String userId) {
+        try {
+            UserRepresentation result = keycloak.realm(keycloakPropsConfig.getRealm()).users()
+                    .get(userId).toRepresentation();
+
+            return CustomerVm.fromModel(result);
+        }catch (Forbidden e){
+            throw new Forbidden(ERROR_FORMAT, e.getMessage(), keycloakPropsConfig.getResource());
+        }
     }
 
     public CustomerVm createGuestUser() {
