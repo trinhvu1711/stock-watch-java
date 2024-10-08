@@ -50,24 +50,14 @@ public class CartController {
 
     @DeleteMapping("/cart-item/multi-delete")
     public ResponseEntity<Void> removeCartItemByStockIdList(@RequestParam List<Long> stockIds) {
-//        cartService.removeCartItemByStockIdList(stockIds);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        cartService.removeCartItemByStockIdList(stockIds, auth.getName());
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/count-cart-items")
-    public ResponseEntity<Long> getNumberItemInCart(Principal principal) {
-        if (principal == null) {
-            return ResponseEntity.ok().body(0L);
-        }
-        return ResponseEntity.ok(cartService.countNumberItemInCart(principal.getName()));
-    }
-
-    @GetMapping("/last-cart")
-    public ResponseEntity<Long> getLastCart(Principal principal) {
-//        if (principal == null) {
-//            return ResponseEntity.ok().body(0L);
-//        }
-//        return ResponseEntity.ok(cartService.getLastCart(principal.getName()));
-        return null;
+    public ResponseEntity<Long> getNumberItemInCart() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return ResponseEntity.ok(cartService.countNumberItemInCart(auth.getName()));
     }
 }

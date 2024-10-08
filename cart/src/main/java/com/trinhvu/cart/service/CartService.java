@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -107,13 +108,21 @@ public class CartService {
     }
 
     public void removeCartItemByStockIdList(List<Long> stockIds, String customerId) {
-//        CartGetDetailVm currentCart = getLastCart(customerId);
-//        stockIds.forEach(stockId -> validateCart(currentCart, stockId));
-//        cartRepository.deleteByCartIdAndStockIdIn(currentCart.id(), stockIds);
+        CartGetDetailVm currentCart = getLastCart(customerId);
+        stockIds.forEach(stockId -> validateCart(currentCart, stockId));
+        cartItemRepository.deleteByCartIdAndStockIdIn(currentCart.id(), stockIds);
     }
 
     public Long countNumberItemInCart(String name) {
-        return null;
+        Optional<Cart> cartOp = cartRepository.findByCustomerIdAndOrderIdIsNull(name).stream()
+                .reduce((first, second) -> second);
+        if (cartOp.isEmpty()) {
+            return 0L;
+        }
+        var cart = cartOp.get();
+//        Long total = cartItemRepository.countItemInCart(cart.getId());
+        Long total = (long) cart.getCartItems().size();
+        return total != null ? total : 0L;
     }
 
     public CartGetDetailVm getLastCart(String customerId) {
