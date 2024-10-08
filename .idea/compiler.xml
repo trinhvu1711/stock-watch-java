@@ -13,6 +13,7 @@
         <module name="payment" />
         <module name="stock" />
         <module name="gateway" />
+        <module name="cart" />
         <module name="order" />
         <module name="customer" />
       </profile>
@@ -20,6 +21,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="cart" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="customer" options="-parameters" />
       <module name="discovery" options="-parameters" />
