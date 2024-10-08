@@ -1,15 +1,13 @@
 package com.trinhvu.cart.service;
 
 import com.trinhvu.cart.exception.BadRequestException;
+import com.trinhvu.cart.exception.NotFoundException;
 import com.trinhvu.cart.model.Cart;
 import com.trinhvu.cart.model.CartItem;
 import com.trinhvu.cart.repository.CartItemRepository;
 import com.trinhvu.cart.repository.CartRepository;
 import com.trinhvu.cart.utils.Constants;
-import com.trinhvu.cart.viewmodel.CartDetailVm;
-import com.trinhvu.cart.viewmodel.CartGetDetailVm;
-import com.trinhvu.cart.viewmodel.CartItemVm;
-import com.trinhvu.cart.viewmodel.CartListVm;
+import com.trinhvu.cart.viewmodel.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +25,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class CartService {
+    private static final String CART_ITEM_UPDATED_MSG = "PRODUCT %s";
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
 
@@ -79,15 +78,28 @@ public class CartService {
                 .map(CartGetDetailVm::fromModel).toList();
     }
 
-    public CartListVm getCartWithFilter(int pageNo, int pageSize) {
-//        Pageable pageable = PageRequest.of(pageNo, pageSize);
-//        Page<Cart> carts = cartRepository.getAllCart(pageable);
-//        return new CartList   Vm(carts.getContent(carts.getContent().))
-        return null;
+    public List<CartListVm> getCartWithFilter(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        return cartRepository.findAll(pageable).stream().map(CartListVm::fromModel).toList();
     }
 
-    public void updateCart(CartItemVm cartItemVm) {
+    public CartItemPutVm updateCartItem(CartItemVm cartItemVm, String customerId) {
+        CartGetDetailVm currentCart = getLastCart(customerId);
+        validateCart(currentCart, cartItemVm.stockId());
 
+        Long cartId = currentCart.id();
+        CartItem cartItem = cartItemRepository.findById(cartId)
+                .orElseThrow(() -> new NotFoundException(Constants.ErrorCode.NON_EXISTING_CART_ITEM + cartId));
+
+        int newQuantity = cartItemVm.quantity();
+        cartItem.setQuantity(newQuantity);
+        if(newQuantity == 0){
+            cartItemRepository.delete(cartItem);
+            return CartItemPutVm.fromModel(cartItem, String.format(CART_ITEM_UPDATED_MSG, "DELETED"));
+        }else {
+            CartItem savedCartItem = cartItemRepository.save(cartItem);
+            return CartItemPutVm.fromModel(savedCartItem, customerId);
+        }
     }
 
     public void removeCartItemByStockId(Long id) {
@@ -104,8 +116,10 @@ public class CartService {
         return null;
     }
 
-    public CartGetDetailVm getLastCart(String name) {
-        return null;
+    public CartGetDetailVm getLastCart(String customerId) {
+        return cartRepository.findByCustomerIdAndOrderIdIsNull(customerId).stream()
+                .reduce((first, second) -> second)
+                .map(CartGetDetailVm::fromModel).orElse(CartGetDetailVm.fromModel(new Cart()));
     }
 
     private void validateCart(CartGetDetailVm cartGetDetailVm, Long stockId) {

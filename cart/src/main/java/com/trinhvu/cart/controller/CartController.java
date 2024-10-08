@@ -2,8 +2,11 @@ package com.trinhvu.cart.controller;
 
 import com.trinhvu.cart.service.CartService;
 import com.trinhvu.cart.viewmodel.*;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -21,7 +24,7 @@ public class CartController {
     }
 
     @GetMapping
-    public ResponseEntity<CartListVm> listCarts(
+    public ResponseEntity<List<CartListVm>> listCarts(
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize
     ) {
@@ -34,9 +37,9 @@ public class CartController {
     }
 
     @PutMapping
-    public ResponseEntity<CartItemPutVm> updateCart(@RequestBody CartItemVm cartItemVm) {
-        cartService.updateCart(cartItemVm);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<CartItemPutVm> updateCart(@Valid @RequestBody CartItemVm cartItemVm)  {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return ResponseEntity.ok(cartService.updateCartItem(cartItemVm, auth.getName()));
     }
 
     @DeleteMapping("/cart-item")
