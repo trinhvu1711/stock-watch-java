@@ -1,4 +1,20 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9098/realms/st
+#      client:
+#        provider:
+#          keycloak:
+#            issuer-uri: http://localhost:9098/realms/stock-watch
+#        registration:
+#          api-client:
+#            provider: keycloak
+#            client-id: stock-watch-api
+#            client-secret: 9sJAzYqZy6hUf2lIK1JrMaCYDNS7WEGF
+#            scope: openid, profile, email, roles
+#            redirect-uri: *
   cloud:
     gateway:
       discovery:
@@ -9,6 +25,10 @@ spring:
           uri: lb:http://STOCK-SERVICE
           predicates:
             - Path=/api/v1/stocks/**
+        - id: stock-price-service
+          uri: lb:http://STOCK-SERVICE
+          predicates:
+            - Path=/api/v1/stock-price/**
         - id: payment-service
           uri: lb:http://PAYMENT-SERVICE
           predicates:
@@ -21,5 +41,9 @@ spring:
           uri: lb://ORDER-SERVICE
           predicates:
             - Path=/api/v1/checkouts/**
+        - id: customer-service
+          uri: lb://CUSTOMER-SERVICE
+          predicates:
+            - Path=/api/v1/customers/**
 server:
   port: 8222

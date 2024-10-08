@@ -74,6 +74,7 @@ services:
       - "22181:2181"
     networks:
       - rs-net
+
   kafka:
     image: confluentinc/cp-kafka:latest
     container_name: rs_java_kafka
@@ -98,6 +99,29 @@ services:
       - 1080:1080
       - 1025:1025
 
+  redis-container:
+    image: docker.io/redis:7.2.3
+    container_name: rs-redis
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis-data:/data
+    networks:
+      - rs-net
+
+  keycloak:
+    container_name: rs_keycloak
+    image: quay.io/keycloak/keycloak:24.0.2
+    ports:
+      - 9098:8080
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    networks:
+      - rs-net
+    command:
+      - "start-dev"
 networks:
   rs-net:
     driver: bridge

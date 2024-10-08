@@ -15,6 +15,7 @@
         <module name="gateway" />
         <module name="cart" />
         <module name="order" />
+        <module name="customer" />
       </profile>
     </annotationProcessing>
   </component>
@@ -22,6 +23,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="cart" options="-parameters" />
       <module name="config-server" options="-parameters" />
+      <module name="customer" options="-parameters" />
       <module name="discovery" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="notification" options="-parameters" />
