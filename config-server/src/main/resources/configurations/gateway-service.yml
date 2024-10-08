@@ -45,5 +45,9 @@ spring:
           uri: lb://CUSTOMER-SERVICE
           predicates:
             - Path=/api/v1/customers/**
+        - id: cart-service
+          uri: lb://CART-SERVICE
+          predicates:
+            - Path=/api/v1/carts/**
 server:
   port: 8222

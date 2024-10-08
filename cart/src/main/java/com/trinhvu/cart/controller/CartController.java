@@ -17,7 +17,7 @@ public class CartController {
 
     @PostMapping
     public ResponseEntity<CartGetDetailVm> createCart(@RequestBody List<CartItemVm> cartItemVm) {
-        return ResponseEntity.ok(cartService.createCart(cartItemVm));
+        return ResponseEntity.ok(cartService.addToCart(cartItemVm));
     }
 
     @GetMapping
@@ -29,7 +29,7 @@ public class CartController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CartGetDetailVm> getCartByCustomerId(@PathVariable Long id) {
+    public ResponseEntity<List<CartGetDetailVm>> getCartByCustomerId(@PathVariable String id) {
        return ResponseEntity.ok(cartService.getCartByCustomerId(id));
     }
 
@@ -47,7 +47,7 @@ public class CartController {
 
     @DeleteMapping("/cart-item/multi-delete")
     public ResponseEntity<Void> removeCartItemByStockIdList(@RequestParam List<Long> stockIds) {
-        cartService.removeCartItemByStockIdList(stockIds);
+//        cartService.removeCartItemByStockIdList(stockIds);
         return ResponseEntity.noContent().build();
     }
 
@@ -59,11 +59,12 @@ public class CartController {
         return ResponseEntity.ok(cartService.countNumberItemInCart(principal.getName()));
     }
 
-    @GetMapping("/count-cart-items")
+    @GetMapping("/last-cart")
     public ResponseEntity<Long> getLastCart(Principal principal) {
-        if (principal == null) {
-            return ResponseEntity.ok().body(0L);
-        }
-        return ResponseEntity.ok(cartService.getLastCart(principal.getName()));
+//        if (principal == null) {
+//            return ResponseEntity.ok().body(0L);
+//        }
+//        return ResponseEntity.ok(cartService.getLastCart(principal.getName()));
+        return null;
     }
 }

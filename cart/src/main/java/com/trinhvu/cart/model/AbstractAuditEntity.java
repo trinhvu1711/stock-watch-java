@@ -1,6 +1,6 @@
 package com.trinhvu.cart.model;
 
-import com.trinhvu.stock.listener.CustomAuditingEntityListener;
+import com.trinhvu.cart.listener.CustomAuditingEntityListener;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import java.time.ZonedDateTime;
