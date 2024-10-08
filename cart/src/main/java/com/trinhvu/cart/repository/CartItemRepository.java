@@ -20,4 +20,7 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
     @Query("SELECT SUM(ci.quantity) FROM CartItem ci WHERE ci.cart.id = :cartId")
     Long countItemInCart(@Param("cartId") Long cartId);
+
+    @Transactional
+    void deleteByCartIdAndStockId(Long cartId, Long stockId);
 }

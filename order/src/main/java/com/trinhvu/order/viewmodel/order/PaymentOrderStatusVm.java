@@ -1,4 +1,4 @@
-package com.trinhvu.order.model;
+package com.trinhvu.order.viewmodel.order;
 
 import lombok.Builder;
 

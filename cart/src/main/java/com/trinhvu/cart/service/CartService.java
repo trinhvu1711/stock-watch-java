@@ -103,8 +103,10 @@ public class CartService {
         }
     }
 
-    public void removeCartItemByStockId(Long id) {
-
+    public void removeCartItemByStockId(Long id, String customerId) {
+        CartGetDetailVm currentCart = getLastCart(customerId);
+        validateCart(currentCart, id);
+        cartItemRepository.deleteByCartIdAndStockId(currentCart.id(), id);
     }
 
     public void removeCartItemByStockIdList(List<Long> stockIds, String customerId) {
