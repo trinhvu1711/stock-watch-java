@@ -42,3 +42,18 @@ application:
     payment-url: http://localhost:8222/api/v1/payments
     alpha-vantage-url: https://www.alphavantage.co
     api-key: LLD9XG573FUU3OCH
+
+resilience4j:
+  retry:
+    instances:
+      rest-api:
+        max-attempts: 3
+
+  circuitbreaker:
+    instances:
+      rest-circuit-breaker:
+        sliding-window-type: COUNT_BASED
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        permitted-number-of-calls-in-half-open-state: 3
