@@ -34,9 +34,10 @@ public class EmailService {
                 new MimeMessageHelper(mimeMessage, MimeMessageHelper.MULTIPART_MODE_RELATED, StandardCharsets.UTF_8.name());
         messageHelper.setFrom("admin@contact.com");
         final String templateName = PAYMENT_CONFIRMATION.getTemplate();
+        String customerName = capturePayment.customerVm().firstName() + " " + capturePayment.customerVm().lastName();
 
         Map<String, Object> variables = new HashMap<>();
-//        variables.put("customerName", customerName);
+        variables.put("customerName", customerName);
         variables.put("amount", capturePayment.amount());
         variables.put("orderReference", capturePayment.orderId());
 
@@ -61,9 +62,9 @@ public class EmailService {
                 new MimeMessageHelper(mimeMessage, MimeMessageHelper.MULTIPART_MODE_RELATED, StandardCharsets.UTF_8.name());
         messageHelper.setFrom("admin@contact.com");
         final String templateName = ORDER_CONFIRMATION.getTemplate();
-
+        String customerName = orderVm.customerVm().firstName() + " " + orderVm.customerVm().lastName();
         Map<String, Object> variables = new HashMap<>();
-//        variables.put("customerName", customerName);
+        variables.put("customerName", customerName);
         variables.put("totalAmount", orderVm.totalPrice());
         variables.put("orderReference", orderVm.id());
         variables.put("stocks", orderVm.orderItemVms());

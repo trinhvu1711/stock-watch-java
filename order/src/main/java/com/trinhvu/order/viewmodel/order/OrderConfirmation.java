@@ -3,6 +3,7 @@ package com.trinhvu.order.viewmodel.order;
 import com.trinhvu.order.model.Order;
 import com.trinhvu.order.model.enumeration.OrderStatus;
 import com.trinhvu.order.model.enumeration.PaymentStatus;
+import com.trinhvu.order.viewmodel.customer.CustomerVm;
 import lombok.Builder;
 
 import java.math.BigDecimal;
@@ -19,9 +20,11 @@ public record OrderConfirmation(
         OrderStatus orderStatus,
         PaymentStatus paymentStatus,
         Long paymentId,
-        Set<OrderItemVm> orderItemVms
+        Set<OrderItemVm> orderItemVms,
+        CustomerVm customerVm
+
 ) {
-    public static OrderConfirmation fromModel(Order order) {
+    public static OrderConfirmation fromModel(Order order, CustomerVm customerVm) {
         Set<OrderItemVm> orderItemVms = order.getOrderItems().stream()
                 .map(OrderItemVm::fromModel)
                 .collect(Collectors.toSet());
@@ -35,7 +38,8 @@ public record OrderConfirmation(
                 order.getOrderStatus(),
                 order.getPaymentStatus(),
                 order.getPaymentId(),
-                orderItemVms
+                orderItemVms,
+                customerVm
         );
     }
 }

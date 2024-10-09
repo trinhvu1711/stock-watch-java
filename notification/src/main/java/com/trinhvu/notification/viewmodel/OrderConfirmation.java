@@ -4,7 +4,7 @@ import com.trinhvu.notification.model.enumeration.OrderStatus;
 import com.trinhvu.notification.model.enumeration.PaymentStatus;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 
 public record OrderConfirmation(
         Long id,
@@ -15,6 +15,7 @@ public record OrderConfirmation(
         OrderStatus orderStatus,
         PaymentStatus paymentStatus,
         Long paymentId,
-        List<OrderItemVm> orderItemVms
+        Set<OrderItemVm> orderItemVms,
+        CustomerVm customerVm
 ) {
 }

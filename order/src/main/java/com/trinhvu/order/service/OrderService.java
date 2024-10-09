@@ -4,6 +4,7 @@ import com.trinhvu.order.exception.NotFoundException;
 import com.trinhvu.order.kafka.OrderProducer;
 import com.trinhvu.order.model.Order;
 import com.trinhvu.order.model.OrderItem;
+import com.trinhvu.order.viewmodel.customer.CustomerVm;
 import com.trinhvu.order.viewmodel.order.PaymentOrderStatusVm;
 import com.trinhvu.order.model.enumeration.OrderStatus;
 import com.trinhvu.order.model.enumeration.PaymentStatus;
@@ -30,6 +31,7 @@ public class OrderService {
     private final OrderProducer orderProducer;
     private final StockService stockService;
     private final CartService cartService;
+    private final CustomerService customerService;
 
     public OrderVm createOrder(@Valid OrderPostVm orderPostVm) {
         Order order = Order.builder()
@@ -66,8 +68,10 @@ public class OrderService {
         // remove from cart
         cartService.deleteCartItem(orderVm);
 
+        CustomerVm customerVm = customerService.getCustomerProfile();
+
         // send notification
-        OrderConfirmation orderConfirmation = OrderConfirmation.fromModel(order);
+        OrderConfirmation orderConfirmation = OrderConfirmation.fromModel(order, customerVm);
         orderProducer.orderConfirmation(orderConfirmation);
         acceptOrder(orderVm.id());
         return orderVm;

@@ -15,7 +15,6 @@ public record PaymentConfirmation(
         PaymentStatus paymentStatus,
         String failureMessage,
         String email,
-        String customerFirstName,
-        String customerLastName
+        CustomerVm customerVm
 ) {
 }

@@ -12,6 +12,7 @@ public record PaymentConfirmation(
         String paymentMethod,
         String paymentStatus,
         String failureMessage,
-        String email
+        String email,
+        CustomerVm customerVm
 ) {
 }

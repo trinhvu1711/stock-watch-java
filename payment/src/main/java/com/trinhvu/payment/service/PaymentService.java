@@ -4,6 +4,7 @@ import com.trinhvu.payment.kafka.PaymentProducer;
 import com.trinhvu.payment.model.Payment;
 import com.trinhvu.payment.repository.PaymentRepository;
 import com.trinhvu.payment.viewmodel.CapturePayment;
+import com.trinhvu.payment.viewmodel.CustomerVm;
 import com.trinhvu.payment.viewmodel.PaymentConfirmation;
 import com.trinhvu.payment.viewmodel.PaymentOrderStatusVm;
 import jakarta.validation.Valid;
@@ -15,7 +16,10 @@ import org.springframework.stereotype.Service;
 public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final OrderService orderService;
+    private final CustomerService customerService;
     private final PaymentProducer paymentProducer;
+
+
     public PaymentOrderStatusVm capturePayment(@Valid CapturePayment capturePayment) {
         Payment payment = createPayment(capturePayment);
         Long orderId = orderService.updateCheckOutStatus(capturePayment);
@@ -27,6 +31,7 @@ public class PaymentService {
                         .build();
 
         PaymentOrderStatusVm result = orderService.updateOrderStatus(paymentOrderStatusVm);
+        CustomerVm customerVm = customerService.getCustomerProfile();
 
         PaymentConfirmation paymentConfirmation = PaymentConfirmation.builder()
                 .orderId(orderId)
@@ -36,7 +41,9 @@ public class PaymentService {
                 .paymentStatus(payment.getPaymentStatus())
                 .failureMessage(payment.getFailureMessage())
                 .email(result.email())
+                .customerVm(customerVm)
                 .build();
+
         paymentProducer.paymentConfirmation(paymentConfirmation);
 
         return result;

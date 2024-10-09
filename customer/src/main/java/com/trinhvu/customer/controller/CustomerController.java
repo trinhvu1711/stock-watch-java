@@ -26,7 +26,7 @@ public class CustomerController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<CustomerVm> getCustomerByEmail() {
+    public ResponseEntity<CustomerVm> getCustomerProfile() {
         return ResponseEntity.ok(customerService.getCustomerProfile(SecurityContextHolder.getContext().getAuthentication().getName()));
     }
 

@@ -29,6 +29,7 @@ application:
     stock-url: http://localhost:8222/api/v1/stocks
     payment-url: http://localhost:8222/api/v1/payments
     cart-url: http://localhost:8222/api/v1/carts
+    customer-url: http://localhost:8222/api/v1/customers
 
 resilience4j:
   retry:
