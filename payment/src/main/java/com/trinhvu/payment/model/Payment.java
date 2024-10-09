@@ -17,7 +17,7 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 @Builder
 @Table(name = "payments")
-public class Payment {
+public class Payment extends AbstractAuditEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,8 +29,4 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
     private String failureMessage;
-    @CreationTimestamp
-    private ZonedDateTime createdOn;
-    @UpdateTimestamp
-    private ZonedDateTime lastModifiedOn;
 }
