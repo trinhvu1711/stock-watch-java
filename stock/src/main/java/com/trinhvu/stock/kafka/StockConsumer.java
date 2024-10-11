@@ -16,6 +16,7 @@ public class StockConsumer {
     @KafkaListener(topics = "stock-price-updates", groupId = "stock_group")
     public void consumeStockPriceUpdate(StocksGetVm stocksGetVm) {
         // Send stock price update to WebSocket clients
+        log.info("Send stock price update to WebSocket clients");
         messagingTemplate.convertAndSend("/topic/stock-price", stocksGetVm);
     }
 }
