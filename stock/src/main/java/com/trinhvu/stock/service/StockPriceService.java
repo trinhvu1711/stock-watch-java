@@ -36,7 +36,7 @@ public class StockPriceService {
         }
 
         StocksGetVm stocksGetVm = StocksGetVm.fromModel(stockRepository.save(stock));
-        stockProducer.sendStockPriceUpdate(stocksGetVm);
+        stockProducer.processStock(stocksGetVm);
         return stocksGetVm;
     }
 

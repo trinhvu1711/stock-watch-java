@@ -14,7 +14,7 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity serverHttpSecurity) {
         return serverHttpSecurity
                 .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec
-                        .pathMatchers("(/eureka/**", "/api/v1/stocks", "/ws-stock-updates")
+                        .pathMatchers("(/eureka/**", "/api/v1/stocks", "/websocket", "/home")
                         .permitAll()
                         .anyExchange().authenticated()
                 )

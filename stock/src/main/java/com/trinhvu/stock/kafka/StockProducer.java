@@ -25,9 +25,9 @@ public class StockProducer {
         kafkaTemplate.send(message);
     }
 
-    public void sendStockPriceUpdate(StocksGetVm stocks) {
+    public void sendStockPriceUpdate(StocksPriceGetVm stocks) {
         log.info("Update stock price successfully");
-        Message<StocksGetVm> message = MessageBuilder
+        Message<StocksPriceGetVm> message = MessageBuilder
                 .withPayload(stocks)
                 .setHeader(TOPIC, "stock-price-updates")
                 .build();

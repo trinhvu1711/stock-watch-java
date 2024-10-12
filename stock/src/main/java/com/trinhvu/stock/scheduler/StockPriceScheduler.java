@@ -40,8 +40,9 @@ public class StockPriceScheduler {
                     new NotFoundException(Constants.ErrorCode.STOCK_NOT_FOUND, symbol));;
             StockPrice stockPrice = getNewPrice(stock);
             stock.getStockPrices().add(stockPrice);
-            StocksGetVm stocksGetVm = StocksGetVm.fromModel(stockRepository.save(stock));
-            stockProducer.sendStockPriceUpdate(stocksGetVm);
+//            StocksGetVm stocksGetVm = StocksGetVm.fromModel(stockRepository.save(stock));
+            StocksPriceGetVm stocksPriceGetVm = StocksPriceGetVm.fromModel(stockPrice);
+            stockProducer.sendStockPriceUpdate(stocksPriceGetVm);
         }
     }
 
