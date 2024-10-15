@@ -78,7 +78,7 @@ const initialOrders = [
 export default function OrderManagementPage() {
   const [orders, setOrders] = useState(initialOrders);
   const [filterSymbol, setFilterSymbol] = useState("All");
-  const [filterStatus, setFilterStatus] = useState("");
+  const [filterStatus, setFilterStatus] = useState("All");
   const [selectedOrder, setSelectedOrder] = useState(null);
 
   const filteredOrders = orders.filter(

@@ -3,10 +3,16 @@ import React from "react";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
+  CarrotIcon,
   PackagePlusIcon,
   StarIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { StockPurchaseVm } from "../models";
+
+const handleAddToCart = (stock: StockPurchaseVm) => {
+  // addToCart(stock); // Call the addToCart function from the CartService
+};
 
 export default function StockCard({ stock, onToggleWatchlist, isWatchlisted }) {
   return (
@@ -24,19 +30,21 @@ export default function StockCard({ stock, onToggleWatchlist, isWatchlisted }) {
           </div>
           <div className="text-right">
             <p className="text-2xl font-semibold text-gray-900">
-              ${stock.price.toFixed(2)}
+              ${stock.currentPrice.toFixed(2)}
             </p>
             <p
               className={`flex items-center text-sm ${
-                stock.change >= 0 ? "text-green-600" : "text-red-600"
+                stock.currentPrice - stock.closePrice >= 0
+                  ? "text-green-600"
+                  : "text-red-600"
               }`}
             >
-              {stock.change >= 0 ? (
+              {stock.currentPrice - stock.closePrice >= 0 ? (
                 <ArrowUpIcon className="h-4 w-4 mr-1" />
               ) : (
                 <ArrowDownIcon className="h-4 w-4 mr-1" />
               )}
-              {Math.abs(stock.change).toFixed(2)}
+              {Math.abs(stock.currentPrice - stock.closePrice).toFixed(2)}
             </p>
           </div>
         </div>
@@ -45,16 +53,9 @@ export default function StockCard({ stock, onToggleWatchlist, isWatchlisted }) {
             variant="ghost"
             size="sm"
             className="mt-4"
-            onClick={() => null}
+            onClick={() => handleAddToCart(stock)}
           >
-            <PackagePlusIcon
-              className={`h-5 w-5 ${
-                false ? "text-yellow-400 fill-yellow-400" : "text-gray-400"
-              }`}
-            />
-            {/* <span className="sr-only">
-            {isWatchlisted ? "Remove from watchlist" : "Add to watchlist"}
-          </span> */}
+            <PackagePlusIcon className={`h-5 w-5 `} />
           </Button>
           <Button
             variant="ghost"

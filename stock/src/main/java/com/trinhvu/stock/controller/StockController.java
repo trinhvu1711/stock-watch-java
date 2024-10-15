@@ -36,6 +36,12 @@ public class StockController    {
        return ResponseEntity.ok(stockService.getStockById(id));
     }
 
+    @GetMapping("/symbol")
+    public ResponseEntity<StockGetDetailVm> getStockById( @RequestParam(value = "stockSymbol", defaultValue = "", required = false) String stockSymbol) {
+        return ResponseEntity.ok(stockService.getStockBySymbol(stockSymbol));
+    }
+
+
     @PutMapping("/{id}")
     public ResponseEntity<StocksGetVm> updateStock(@PathVariable Long id, @RequestBody StockPutVm updatedStock) {
         stockService.updateStock(id, updatedStock);
@@ -51,6 +57,12 @@ public class StockController    {
     @PutMapping(path = "/subtract-quantity", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> subtractStockQuantity(@RequestBody List<StockPurchaseVm> stockPurchaseVms) {
         stockService.subtractStockQuantity(stockPurchaseVms);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(path = "/plus-quantity", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Void> plusStockQuantity(@RequestBody List<StockPurchaseVm> stockPurchaseVms) {
+        stockService.restoreStockQuantity(stockPurchaseVms);
         return ResponseEntity.noContent().build();
     }
 }

@@ -160,4 +160,9 @@ public class StockService {
     private BiFunction<Long, Long, Long> restoreStockQuantity() {
         return Long::sum;
     }
+
+    public StockGetDetailVm getStockBySymbol(String stockSymbol) {
+        Stock stock = stockRepository.findBySymbol(stockSymbol).orElseThrow(() -> new NotFoundException(Constants.ErrorCode.STOCK_NOT_FOUND, stockSymbol));
+        return StockGetDetailVm.fromModel(stock);
+    }
 }
