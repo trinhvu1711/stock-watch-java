@@ -5,7 +5,7 @@ import { OrderVm } from "../models/OrderVm";
 import { CheckoutVm } from "../models/CheckoutVm";
 import { CheckoutPostVm } from "../models/CheckoutPostVm";
 
-const baseUrl = "http://localhost:8222/api/v1";
+const baseUrl = "http://localhost:8060/api/v1";
 
 export async function createOrder(order: OrderVm): Promise<OrderVm | null> {
   const response = await apiClientService.post(
@@ -44,7 +44,7 @@ export async function createCheckout(
   throw new Error(response.statusText);
 }
 
-export async function getCheckoutById(id: string) {
+export async function getCheckoutById(id: string): Promise<CheckoutVm | null> {
   const response = await apiClientService.get(`${baseUrl}/checkouts/${id}`);
   if (response.status >= 200 && response.status < 300) return response.json();
   throw new Error(response.statusText);

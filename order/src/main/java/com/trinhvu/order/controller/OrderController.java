@@ -17,6 +17,7 @@ import java.time.ZonedDateTime;
 @RestController
 @RequestMapping("api/v1/orders")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class OrderController {
     private final OrderService orderService;
 

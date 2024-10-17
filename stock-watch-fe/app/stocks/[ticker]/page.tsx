@@ -59,7 +59,10 @@ import {
 } from "@/components/ui/table";
 import { getStockBySymbol } from "@/components/stock/services/StockService";
 import { StockGetDetailVm } from "@/components/stock/models/StockGetDetailVm";
-
+import { CheckoutItemPostVm } from "@/components/order/models/CheckoutItemPostVm";
+import { CheckoutPostVm } from "@/components/order/models/CheckoutPostVm";
+import { createCheckout } from "@/components/order/services/OrderService";
+import { useRouter } from "next/navigation";
 type Props = {
   params: {
     ticker: string;
@@ -149,8 +152,8 @@ const getStockDetails = (symbol) => {
 };
 
 export default function StockDetailPage({ params, searchParams }: Props) {
+  const router = useRouter();
   const ticker = params.ticker;
-
   const [isWatchlisted, setIsWatchlisted] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [timeframe, setTimeframe] = useState("1Y");
@@ -173,10 +176,43 @@ export default function StockDetailPage({ params, searchParams }: Props) {
     // In a real app, you would update the watchlist in the backend here
   };
 
+  const convertItemToCheckoutItem = (
+    item: StockGetDetailVm,
+    quantity: number
+  ): CheckoutItemPostVm => {
+    return {
+      stockId: item.id,
+      stockName: item.name,
+      quantity: quantity,
+      price: item.currentPrice,
+      note: "",
+    };
+  };
+
+  const convertItemsToCheckoutItems = (
+    items: StockGetDetailVm[]
+  ): CheckoutItemPostVm[] => {
+    return items.map(convertItemToCheckoutItem);
+  };
+
   const handleTrade = (event, action) => {
     event.preventDefault();
     // In a real app, you would send a buy/sell order to the backend here
-    console.log(`${action} ${quantity} shares of ${symbol}`);
+    console.log(`${action} ${quantity} shares of ${stock!.symbol}`);
+    const item = convertItemToCheckoutItem(stock!, quantity);
+    console.log("🚀 ~ handleTrade ~ item:", item);
+    createCheckout({
+      email: "",
+      note: "",
+      checkoutItemPostVms: [item],
+    })
+      .then((checkout) => {
+        console.log("Checkout created:", checkout);
+        router.push(`/checkout/${checkout!.id}`);
+      })
+      .catch((error) => {
+        console.error("An error occurred while creating the checkout:", error);
+      });
   };
 
   return (

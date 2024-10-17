@@ -1,11 +1,14 @@
 package com.trinhvu.order.service;
 
+import com.trinhvu.order.exception.Forbidden;
 import com.trinhvu.order.exception.NotFoundException;
 import com.trinhvu.order.model.Checkout;
 import com.trinhvu.order.model.CheckoutItem;
 import com.trinhvu.order.model.Order;
 import com.trinhvu.order.model.enumeration.CheckoutState;
 import com.trinhvu.order.repository.CheckoutRepository;
+import com.trinhvu.order.utils.AuthenticationUtils;
+import com.trinhvu.order.utils.Constants;
 import com.trinhvu.order.viewmodel.checkout.CheckoutPostVm;
 import com.trinhvu.order.viewmodel.checkout.CheckoutPutVm;
 import com.trinhvu.order.viewmodel.checkout.CheckoutVm;
@@ -54,5 +57,15 @@ public class CheckoutService {
         checkoutRepository.save(checkout);
         Order order = orderService.findOrderByCheckoutId(checkout.getId());
         return order.getId();
+    }
+
+    public CheckoutVm getCheckoutPendingStateWithItemsById(String id) {
+        Checkout checkout = checkoutRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(CHECKOUT_NOT_FOUND, id));
+
+//        if (!checkout.getCreatedBy().equals(AuthenticationUtils.getCurrentUserId())) {
+//            throw new Forbidden(Constants.ErrorCode.FORBIDDEN);
+//        }
+        return CheckoutVm.fromModel(checkout);
     }
 }

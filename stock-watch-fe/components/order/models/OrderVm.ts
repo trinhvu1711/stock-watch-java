@@ -1,16 +1,15 @@
-import { EOrderStatus } from "./EOrderStatus";
 import { OrderItemVm } from "./OrderItemVm";
 
 export interface OrderVm {
-  id: number;
+  id?: number;
   email: string;
   note: string;
   numberItem: number;
   totalPrice: number; // BigDecimal represented as number in TypeScript
-  orderStatus: EOrderStatus;
+  orderStatus: string;
   paymentStatus: string;
-  paymentId: number;
-  orderItemVms: Set<OrderItemVm>; // Set to manage the unique list of items
+  paymentId?: number;
+  orderItem: OrderItemVm[]; // Set to manage the unique list of items
 
   checkoutId: string;
 }

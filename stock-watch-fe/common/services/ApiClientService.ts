@@ -1,3 +1,5 @@
+import { getSession } from "next-auth/react";
+
 interface RequestOptions {
   method: string;
   headers: {
@@ -12,17 +14,21 @@ const sendRequest = async (
   data: any = null,
   contentType: string | null = null
 ) => {
+  const session = await getSession();
+  const accessToken = session?.access_token;
+  console.log("🚀 ~ accessToken:", accessToken);
   const defaultContentType = "application/json; charset=UTF-8";
   const requestOptions: RequestOptions = {
     method: method.toUpperCase(),
     headers: {
-      "Content-type": contentType ?? defaultContentType,
+      "Content-Type": contentType ?? defaultContentType,
+      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
     },
   };
 
   if (data) {
     if (data instanceof FormData) {
-      delete requestOptions.headers["Content-type"];
+      delete requestOptions.headers["Content-Type"];
     }
     requestOptions.body = data;
   }

@@ -18,6 +18,7 @@ public class CheckoutItem {
     private Long id;
     private Long stockId;
     private String stockName;
+    private String stockSymbol;
     private int quantity;
     private BigDecimal price;
     private String note;

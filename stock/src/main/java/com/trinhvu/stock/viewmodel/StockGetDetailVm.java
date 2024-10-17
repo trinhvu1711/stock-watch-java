@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public record StockGetDetailVm(
+        Long id,
         String symbol,
         String name,
         String exchange,
@@ -30,6 +31,7 @@ public record StockGetDetailVm(
                 .collect(Collectors.toSet());
 
         return new StockGetDetailVm(
+                stock.getId(),
                 stock.getSymbol(),
                 stock.getName(),
                 stock.getExchange(),

@@ -53,6 +53,7 @@ public class OrderService {
                         .orderId(order)
                         .stockId(item.stockId())
                         .stockName(item.stockName())
+                        .stockSymbol(item.stockSymbol())
                         .quantity(item.quantity())
                         .stockPrice(item.stockPrice())
                         .note(item.note())
@@ -66,7 +67,7 @@ public class OrderService {
         stockService.subtractStockQuantity(orderVm);
 
         // remove from cart
-        cartService.deleteCartItem(orderVm);
+//        cartService.deleteCartItem(orderVm);
 
         CustomerVm customerVm = customerService.getCustomerProfile();
 

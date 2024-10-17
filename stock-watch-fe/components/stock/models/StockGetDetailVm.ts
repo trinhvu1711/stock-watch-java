@@ -1,6 +1,7 @@
 import { StocksPriceGetVm } from "./StockPriceVm";
 
 export interface StockGetDetailVm {
+  id: number;
   symbol: string;
   name: string;
   exchange: string;

@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Table(name = "checkouts")
-public class Checkout {
+public class Checkout extends AbstractAuditEntity {
     @Id
     private String id;
     private String email;

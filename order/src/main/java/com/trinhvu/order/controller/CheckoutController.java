@@ -23,4 +23,9 @@ public class CheckoutController {
     public ResponseEntity<Long> updateCheckoutStatus(@RequestBody CheckoutPutVm checkoutPutVm) {
         return ResponseEntity.ok(checkoutService.updateCheckoutStatus(checkoutPutVm));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CheckoutVm> getOrderWithItemsById(@PathVariable String id) {
+        return ResponseEntity.ok(checkoutService.getCheckoutPendingStateWithItemsById(id));
+    }
 }
