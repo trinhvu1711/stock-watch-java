@@ -9,7 +9,7 @@ export interface OrderVm {
   orderStatus: string;
   paymentStatus: string;
   paymentId?: number;
-  orderItem: OrderItemVm[]; // Set to manage the unique list of items
+  orderItemVms: OrderItemVm[]; // Set to manage the unique list of items
 
   checkoutId: string;
 }

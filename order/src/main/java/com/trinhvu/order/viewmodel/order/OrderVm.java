@@ -17,7 +17,8 @@ public record OrderVm(
         OrderStatus orderStatus,
         PaymentStatus paymentStatus,
         Long paymentId,
-        Set<OrderItemVm> orderItemVms
+        Set<OrderItemVm> orderItemVms,
+        String checkoutId
 ) {
     public static OrderVm fromModel(Order order) {
         Set<OrderItemVm> orderItemVms = order.getOrderItems().stream()
@@ -33,7 +34,8 @@ public record OrderVm(
                 order.getOrderStatus(),
                 order.getPaymentStatus(),
                 order.getPaymentId(),
-                orderItemVms
+                orderItemVms,
+                order.getCheckoutId()
         );
     }
 }

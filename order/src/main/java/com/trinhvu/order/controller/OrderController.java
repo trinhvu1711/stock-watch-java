@@ -59,4 +59,9 @@ public class OrderController {
                 stockName
         ));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderVm> getOrderWithItemsById(@PathVariable long id) {
+        return ResponseEntity.ok(orderService.getOrderWithItemsById(id));
+    }
 }

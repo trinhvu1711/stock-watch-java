@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,26 +12,76 @@ import {
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Link from "next/link";
+import { OrderVm } from "@/components/order/models/OrderVm";
+import { getOrderById } from "@/components/order/services/OrderService";
+import { useRouter } from "next/navigation";
+import { Payment } from "@/components/payment/models/Payment";
+import { CapturePayment } from "@/components/payment/models/CapturePayment";
+import { create } from "domain";
+import { createPayment } from "@/components/payment/services/PaymentService";
+type Props = {
+  params: {
+    id: string;
+  };
+};
 
-export default function PaymentPage() {
-  const [paymentMethod, setPaymentMethod] = useState("credit_card");
+export default function PaymentPage({ params }: Props) {
+  const router = useRouter();
+  const id = params.id;
+  const [order, setOrder] = useState<OrderVm>();
+  const [isLoading, setLoading] = useState(true);
+  const [paymentMethod, setPaymentMethod] = useState("BANKING");
   const [cardDetails, setCardDetails] = useState({
     cardNumber: "",
     expiryDate: "",
     cvv: "",
   });
 
+  useEffect(() => {
+    setLoading(true);
+    if (id) {
+      getOrderById(+id)
+        .then((res) => {
+          console.log("🚀 ~ .then ~ res:", res);
+          setOrder(res);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log("🚀 ~ useEffect ~ err:", err.message);
+        });
+    }
+  }, [id]);
+
+  if (isLoading) return <p>Loading...</p>;
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setCardDetails((prevDetails) => ({ ...prevDetails, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Here you would typically process the payment
+    if (!order) {
+      console.error("Order is undefined");
+      return;
+    }
+    console.log("🚀 ~ handleSubmit ~ order:", order);
+    const capturePayment: CapturePayment = {
+      orderId: order!.id!,
+      checkOutId: order.checkoutId,
+      amount: order.totalPrice,
+      paymentMethod: paymentMethod,
+      paymentStatus: "COMPLETED",
+      failureMessage: "",
+    };
+    console.log("🚀 ~ handleSubmit ~ capturePayment:", capturePayment);
+
+    const payment = await createPayment(capturePayment);
+
     console.log("Payment processed:", { paymentMethod, cardDetails });
     // Redirect to order confirmation page
-    window.location.href = "/order";
+    router.push(`/payment/confirmation/${payment!.paymentId}`);
   };
 
   return (
@@ -50,16 +100,16 @@ export default function PaymentPage() {
                   onValueChange={setPaymentMethod}
                 >
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="credit_card" id="credit_card" />
-                    <Label htmlFor="credit_card">Credit Card</Label>
+                    <RadioGroupItem value="BANKING" id="banking" />
+                    <Label htmlFor="banking">Banking</Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="paypal" id="paypal" />
+                    <RadioGroupItem value="PAYPAL" id="paypal" />
                     <Label htmlFor="paypal">PayPal</Label>
                   </div>
                 </RadioGroup>
               </div>
-              {paymentMethod === "credit_card" && (
+              {paymentMethod === "banking" && (
                 <>
                   <div className="grid gap-2">
                     <Label htmlFor="cardNumber">Card Number</Label>

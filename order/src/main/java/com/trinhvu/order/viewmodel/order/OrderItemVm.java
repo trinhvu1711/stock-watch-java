@@ -1,10 +1,7 @@
 package com.trinhvu.order.viewmodel.order;
 
-import com.trinhvu.order.model.Order;
 import com.trinhvu.order.model.OrderItem;
-
 import java.math.BigDecimal;
-import java.util.Locale;
 
 public record OrderItemVm(
         Long id,

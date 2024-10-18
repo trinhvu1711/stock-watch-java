@@ -183,6 +183,7 @@ export default function StockDetailPage({ params, searchParams }: Props) {
     return {
       stockId: item.id,
       stockName: item.name,
+      stockSymbol: item.symbol,
       quantity: quantity,
       price: item.currentPrice,
       note: "",

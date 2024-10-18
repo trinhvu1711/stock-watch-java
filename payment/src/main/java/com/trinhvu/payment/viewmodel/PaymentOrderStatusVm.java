@@ -1,5 +1,6 @@
 package com.trinhvu.payment.viewmodel;
 
+import com.trinhvu.payment.model.Payment;
 import lombok.Builder;
 
 @Builder

@@ -1,5 +1,6 @@
 package com.trinhvu.payment.controller;
 
+import com.trinhvu.payment.model.Payment;
 import com.trinhvu.payment.service.PaymentService;
 import com.trinhvu.payment.viewmodel.CapturePayment;
 import com.trinhvu.payment.viewmodel.PaymentOrderStatusVm;
@@ -17,6 +18,11 @@ public class PaymentController {
     @PostMapping("/capture")
     public ResponseEntity<PaymentOrderStatusVm> capturePayment(@Valid @RequestBody CapturePayment capturePayment) {
         return ResponseEntity.ok(paymentService.capturePayment(capturePayment));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Payment> getPaymentById(@PathVariable long id) {
+        return ResponseEntity.ok(paymentService.getPaymentById(id));
     }
 
 }

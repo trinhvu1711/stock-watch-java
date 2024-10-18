@@ -75,7 +75,7 @@ export default function CheckoutPage({ params }: Props) {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Here you would typically send the form data to your backend
     try {
@@ -99,11 +99,12 @@ export default function CheckoutPage({ params }: Props) {
       };
       console.log("🚀 ~ handleSubmit ~ newOrder:", newOrder);
 
-      const createdOrder = createOrder(newOrder);
+      const createdOrder = await createOrder(newOrder);
       console.log("Order created:", createdOrder);
-
+      const orderId = createdOrder.id;
+      console.log("🚀 ~ handleSubmit ~ id:", id);
       // Redirect to payment or order summary page
-      router.push(`/order/${createdOrder.id}`);
+      router.push(`/order/${orderId}`);
     } catch (error) {
       console.error("Order creation error:", error);
     }

@@ -37,6 +37,7 @@ public class CheckoutService {
                         .map(checkoutItemPostVm -> CheckoutItem.builder()
                                 .stockId(checkoutItemPostVm.stockId())
                                 .stockName(checkoutItemPostVm.stockName())
+                                .stockSymbol(checkoutItemPostVm.stockSymbol())
                                 .quantity(checkoutItemPostVm.quantity())
                                 .price(checkoutItemPostVm.price())
                                 .note(checkoutItemPostVm.note())

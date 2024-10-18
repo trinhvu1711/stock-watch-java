@@ -1,5 +1,6 @@
 package com.trinhvu.payment.service;
 
+import com.trinhvu.payment.exception.NotFoundException;
 import com.trinhvu.payment.kafka.PaymentProducer;
 import com.trinhvu.payment.model.Payment;
 import com.trinhvu.payment.repository.PaymentRepository;
@@ -59,5 +60,10 @@ public class PaymentService {
                 .failureMessage(capturePayment.failureMessage())
                 .build();
         return paymentRepository.save(payment);
+    }
+
+    public Payment getPaymentById(long id) {
+        Payment payment = paymentRepository.findById(id).orElseThrow(() -> new NotFoundException("Payment not found"));
+        return payment;
     }
 }

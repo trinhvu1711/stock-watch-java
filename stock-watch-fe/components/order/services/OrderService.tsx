@@ -49,3 +49,9 @@ export async function getCheckoutById(id: string): Promise<CheckoutVm | null> {
   if (response.status >= 200 && response.status < 300) return response.json();
   throw new Error(response.statusText);
 }
+
+export async function getOrderById(id: number): Promise<OrderVm | null> {
+  const response = await apiClientService.get(`${baseUrl}/orders/${id}`);
+  if (response.status >= 200 && response.status < 300) return response.json();
+  throw new Error(response.statusText);
+}

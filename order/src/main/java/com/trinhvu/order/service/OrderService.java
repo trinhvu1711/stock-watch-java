@@ -132,4 +132,9 @@ public class OrderService {
         return this.orderRepository.findByCheckoutId(checkoutId)
                 .orElseThrow(() -> new NotFoundException(ORDER_NOT_FOUND,"of checkout id " + checkoutId));
     }
+
+    public OrderVm getOrderWithItemsById(long id) {
+        Order order = orderRepository.findById(id).orElseThrow(()-> new NotFoundException(ORDER_NOT_FOUND, id));
+        return OrderVm.fromModel(order);
+    }
 }
