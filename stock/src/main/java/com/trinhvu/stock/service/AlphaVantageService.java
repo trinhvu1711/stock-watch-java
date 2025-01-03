@@ -2,12 +2,10 @@ package com.trinhvu.stock.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.trinhvu.stock.exception.NotFoundException;
 import com.trinhvu.stock.model.Stock;
 import com.trinhvu.stock.model.StockPrice;
 import com.trinhvu.stock.repository.StockPriceRepository;
-import com.trinhvu.stock.repository.StockRepository;
-import com.trinhvu.stock.viewmodel.StocksPricePostVm;
+import com.trinhvu.stock.viewmodel.stock.StocksPricePostVm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -17,8 +15,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;

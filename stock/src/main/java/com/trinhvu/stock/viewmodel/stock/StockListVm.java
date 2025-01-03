@@ -1,4 +1,4 @@
-package com.trinhvu.stock.viewmodel;
+package com.trinhvu.stock.viewmodel.stock;
 
 import com.trinhvu.stock.model.Stock;
 

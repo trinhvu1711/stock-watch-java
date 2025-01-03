@@ -6,7 +6,7 @@ import com.trinhvu.stock.kafka.StockProducer;
 import com.trinhvu.stock.model.Stock;
 import com.trinhvu.stock.repository.StockRepository;
 import com.trinhvu.stock.utils.Constants;
-import com.trinhvu.stock.viewmodel.*;
+import com.trinhvu.stock.viewmodel.stock.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

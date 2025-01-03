@@ -1,7 +1,7 @@
 package com.trinhvu.stock.kafka;
 
-import com.trinhvu.stock.viewmodel.StocksGetVm;
-import com.trinhvu.stock.viewmodel.StocksPriceGetVm;
+import com.trinhvu.stock.viewmodel.binanceStock.BinanceStockGetVm;
+import com.trinhvu.stock.viewmodel.stock.StocksPriceGetVm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -21,6 +21,18 @@ public class StockConsumer {
             log.info("Send stock price update to WebSocket clients");
             log.info("Received message from Kafka: {}", stocksGetVm);
             messagingTemplate.convertAndSend("/topic/stock-price", stocksGetVm);
+        }catch (Exception exception) {
+            log.error("Thread sleep interrupted. Nested exception {}", exception.getMessage());
+        }
+    }
+
+    @KafkaListener(topics = "binance-stock-price-updates", groupId = "stock_group")
+    public void consumeBinanceStockPriceUpdate(BinanceStockGetVm stocksGetVm) {
+        // Send stock price update to WebSocket clients
+        try {
+            log.info("Send binance stock price update to WebSocket clients");
+            log.info("Received binance-stock-price-updates message from Kafka: {}", stocksGetVm);
+            messagingTemplate.convertAndSend("/topic/binance-stock-price", stocksGetVm);
         }catch (Exception exception) {
             log.error("Thread sleep interrupted. Nested exception {}", exception.getMessage());
         }

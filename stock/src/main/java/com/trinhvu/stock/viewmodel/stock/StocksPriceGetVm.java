@@ -1,9 +1,8 @@
-package com.trinhvu.stock.viewmodel;
+package com.trinhvu.stock.viewmodel.stock;
 
 import com.trinhvu.stock.model.StockPrice;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 public record StocksPriceGetVm(
         Double openPrice,

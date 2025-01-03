@@ -2,7 +2,7 @@ package com.trinhvu.stock.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.trinhvu.stock.service.StockService;
-import com.trinhvu.stock.viewmodel.*;
+import com.trinhvu.stock.viewmodel.stock.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

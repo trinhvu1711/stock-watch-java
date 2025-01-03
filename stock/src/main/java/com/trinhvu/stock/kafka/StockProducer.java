@@ -1,7 +1,8 @@
 package com.trinhvu.stock.kafka;
 
-import com.trinhvu.stock.viewmodel.StocksGetVm;
-import com.trinhvu.stock.viewmodel.StocksPriceGetVm;
+import com.trinhvu.stock.viewmodel.binanceStock.BinanceStockGetVm;
+import com.trinhvu.stock.viewmodel.stock.StocksGetVm;
+import com.trinhvu.stock.viewmodel.stock.StocksPriceGetVm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -30,6 +31,15 @@ public class StockProducer {
         Message<StocksPriceGetVm> message = MessageBuilder
                 .withPayload(stocks)
                 .setHeader(TOPIC, "stock-price-updates")
+                .build();
+        kafkaTemplate.send(message);
+    }
+
+    public void sendStockBinancePrice(BinanceStockGetVm stocks) {
+        log.info("Add binance stock price successfully");
+        Message<BinanceStockGetVm> message = MessageBuilder
+                .withPayload(stocks)
+                .setHeader(TOPIC, "binance-stock-price-updates")
                 .build();
         kafkaTemplate.send(message);
     }
