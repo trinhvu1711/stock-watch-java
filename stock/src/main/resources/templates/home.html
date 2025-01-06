@@ -47,7 +47,7 @@
         function frameHandler(frame) {
             setConnected(true);
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/topic/stock-price', function (message) {
+            stompClient.subscribe('/topic/binance-stock-price', function (message) {
                 showMessage(message.body);
             });
         }
@@ -100,25 +100,24 @@
             console.log("Disconnected");
         }
 
-        function sendMessage() {
-            stompClient.publish({
-                destination: "/app/updateStockPrice", // Adjust the destination according to your server endpoint
-                body: JSON.stringify({
-                    'from': $("#from").val(),
-                    'message': $("#message").val()
-                })
-            });
-        }
-
         function showMessage(message) {
-            var stockData = JSON.parse(message);
-            $("#responses").prepend("<tr>" +
-                "<td class='timeStamp'>" + new Date(stockData.timestamp).toLocaleTimeString() + "</td>" +
-                "<td>Open: " + stockData.openPrice + "</td>" +
-                "<td>Close: " + stockData.closePrice + "</td>" +
-                "<td>High: " + stockData.highPrice + "</td>" +
-                "<td>Low: " + stockData.lowPrice + "</td>" +
-                "<td>Volume: " + stockData.volume + "</td>" +
+            const stockData = JSON.parse(message);
+
+            $("#messages").prepend("<tr>" +
+                "<td>" + stockData.e + "</td>" +
+                "<td>" + new Date(stockData.E).toLocaleString() + "</td>" +
+                "<td>" + stockData.s + "</td>" +
+                "<td>" + stockData.p + "</td>" +
+                "<td>" + stockData.P + "%</td>" +
+                "<td>" + stockData.w + "</td>" +
+                "<td>" + stockData.c + "</td>" +
+                "<td>" + stockData.b + "</td>" +
+                "<td>" + stockData.a + "</td>" +
+                "<td>" + stockData.o + "</td>" +
+                "<td>" + stockData.h + "</td>" +
+                "<td>" + stockData.l + "</td>" +
+                "<td>" + stockData.v + "</td>" +
+                "<td>" + stockData.q + "</td>" +
                 "</tr>");
         }
 
@@ -172,28 +171,23 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="from">Username:</label>
-                    <input class="form-control" id="from" placeholder="Username..." type="text">
-                    <label for="message">Message:</label>
-                    <input class="form-control" id="message" placeholder="Your message here..." type="text">
-                </div>
-                <button class="btn btn-default" id="send" type="button">Send</button>
-            </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
             <table class="table table-striped" id="responses">
                 <thead>
                 <tr>
-                    <th>Time</th>
+                    <th>Event</th>
+                    <th>Event Time</th>
+                    <th>Symbol</th>
+                    <th>Price Change</th>
+                    <th>Price Change Percent</th>
+                    <th>Weighted Average Price</th>
+                    <th>Current Close Price</th>
+                    <th>Bid Price</th>
+                    <th>Ask Price</th>
                     <th>Open Price</th>
-                    <th>Close Price</th>
                     <th>High Price</th>
                     <th>Low Price</th>
                     <th>Volume</th>
+                    <th>Quote Volume</th>
                 </tr>
                 </thead>
                 <tbody id="messages">

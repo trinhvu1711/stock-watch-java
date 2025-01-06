@@ -29,20 +29,44 @@ public record BinanceStockGetVm(
                 "24hrTicker",               // Event type (default or dynamic if needed)
                 binanceStock.getEventTime(), // Event time
                 binanceStock.getSymbol(),    // Symbol
-                binanceStock.getPriceChange(), // Price change
-                binanceStock.getPriceChangePercent(), // Price change percent
-                binanceStock.getWeightedAvgPrice(),   // Weighted average price
-                binanceStock.getCurrentPrice(),       // Last price
-                binanceStock.getLastQuantity(),       // Last quantity
-                binanceStock.getBestBidPrice(),       // Best bid price
-                binanceStock.getBestBidQuantity(),    // Best bid quantity
-                binanceStock.getBestAskPrice(),       // Best ask price
-                binanceStock.getBestAskQuantity(),    // Best ask quantity
-                binanceStock.getOpenPrice(),          // Open price
-                binanceStock.getHighPrice(),          // High price
-                binanceStock.getLowPrice(),           // Low price
-                binanceStock.getVolume(),             // Total traded base asset volume
-                null                                  // Total traded quote asset volume, adapt as needed
+                new BigDecimal(binanceStock.getPriceChange()), // Price change (converted to BigDecimal)
+                new BigDecimal(binanceStock.getPriceChangePercent()), // Price change percent
+                new BigDecimal(binanceStock.getWeightedAvgPrice()),   // Weighted average price
+                new BigDecimal(binanceStock.getCurrentPrice()),       // Last price (converted to BigDecimal)
+                new BigDecimal(binanceStock.getLastQuantity()),       // Last quantity
+                new BigDecimal(binanceStock.getBestBidPrice()),       // Best bid price
+                new BigDecimal(binanceStock.getBestBidQuantity()),    // Best bid quantity
+                new BigDecimal(binanceStock.getBestAskPrice()),       // Best ask price
+                new BigDecimal(binanceStock.getBestAskQuantity()),    // Best ask quantity
+                new BigDecimal(binanceStock.getOpenPrice()),          // Open price
+                new BigDecimal(binanceStock.getHighPrice()),          // High price
+                new BigDecimal(binanceStock.getLowPrice()),           // Low price
+                new BigDecimal(binanceStock.getVolume()),             // Total traded base asset volume
+                null // Total traded quote asset volume, adapt as needed
         );
     }
+
+
+    public static BinanceStock toModel(BinanceStockGetVm vm) {
+        return BinanceStock.builder()
+                .symbol(vm.s())
+                .currentPrice(vm.c().toString())  // Ensure we convert BigDecimal back to String if needed
+                .openPrice(vm.o().toString())
+                .closePrice(vm.c().toString()) // Assuming "last price" as close price
+                .highPrice(vm.h().toString())
+                .lowPrice(vm.l().toString())
+                .volume(vm.v().toString())
+                .priceChange(vm.p().toString())
+                .priceChangePercent(vm.P().toString())
+                .weightedAvgPrice(vm.w().toString())
+                .lastQuantity(vm.Q().toString())
+                .bestBidPrice(vm.b().toString())
+                .bestBidQuantity(vm.B().toString())
+                .bestAskPrice(vm.a().toString())
+                .bestAskQuantity(vm.A().toString())
+                .eventTime(vm.E())
+                .closeTime(null) // Close time can be added as per the data flow
+                .build();
+    }
+
 }

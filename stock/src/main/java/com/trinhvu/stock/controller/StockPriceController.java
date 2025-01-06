@@ -17,6 +17,8 @@ public class StockPriceController {
     private final StockPriceScheduler stockPriceScheduler;
     private final BinanceService binanceService;
 
+    private volatile boolean isTaskRunning = false;
+
     @PostMapping
     public ResponseEntity<StocksGetVm> addStock(@RequestParam(value = "stockSymbol", required = true) String stockSymbol) {
         return ResponseEntity.ok(stockPriceService.updateStockPrice(stockSymbol));
@@ -28,8 +30,15 @@ public class StockPriceController {
     }
 
     @PostMapping("/start-task")
-    public void startTask(@RequestParam(value = "stockSymbol", required = true) String stockSymbol) {
-        stockPriceScheduler.startTask(stockSymbol);
+    public synchronized void startTask(@RequestParam(value = "stockSymbol", required = true) String stockSymbol) {
+        if (isTaskRunning) {
+            System.out.println("Task already running for: " + stockSymbol);
+            return;
+        }
+
+        isTaskRunning = true;
+
+//        stockPriceScheduler.startTask(stockSymbol);
         try {
             binanceService.startFetchAllStockData();
         } catch (InterruptedException e) {
@@ -39,7 +48,12 @@ public class StockPriceController {
 
     @PostMapping("/stop-task")
     public void stopTask() {
-        stockPriceScheduler.stopTask();
+        if (!isTaskRunning) {
+            System.out.println("No task is running.");
+            return;
+        }
+        isTaskRunning = false;
+//        stockPriceScheduler.stopTask();
         binanceService.stop();
     }
 

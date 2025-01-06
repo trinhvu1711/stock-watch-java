@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -50,6 +52,25 @@ public class BinanceStockGetVmMapper {
         } catch (Exception e) {
             log.error("Error converting websocket data: {}", e.getMessage());
             throw new BadRequestException("Failed to convert websocket data", e);
+        }
+    }
+
+    public List<BinanceStockGetVm> convertToViewModelList(String websocketData) {
+        try {
+            JsonNode rootNode = objectMapper.readTree(websocketData);
+            if (!rootNode.isArray()) {
+                throw new BadRequestException("Expected an array of stock data");
+            }
+
+            List<BinanceStockGetVm> result = new ArrayList<>();
+            for (JsonNode node : rootNode) {
+                result.add(convertToViewModel(node.toString()));
+            }
+
+            return result;
+        } catch (Exception e) {
+            log.error("Error converting websocket data to list: {}", e.getMessage());
+            throw new BadRequestException("Failed to convert websocket data to list", e);
         }
     }
 
