@@ -1,6 +1,6 @@
-package com.trinhvu.stock.viewmodel;
+package com.trinhvu.stock.viewmodel.stock;
 
-public record StockPostVm(
+public record StockPutVm(
         String symbol,
         String name,
         String exchange,

@@ -20,7 +20,7 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
-        spring.json.type.mapping: stocksGetVm:com.trinhvu.stock.viewmodel.StocksGetVm
+        spring.json.type.mapping: stocksGetVm:com.trinhvu.stock.viewmodel.stock.StocksGetVm, stocksPriceGetVm:com.trinhvu.stock.viewmodel.stock.StocksPriceGetVm, BinanceStockGetVm:com.trinhvu.stock.viewmodel.binanceStock.BinanceStockGetVm
     consumer:
       bootstrap-servers: localhost:9092
       group-id: stock_group
@@ -29,7 +29,7 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: '*'
-        spring.json.type.mapping: stocksGetVm:com.trinhvu.stock.viewmodel.StocksGetVm
+        spring.json.type.mapping: stocksPriceGetVm:com.trinhvu.stock.viewmodel.stock.StocksPriceGetVm, BinanceStockGetVm:com.trinhvu.stock.viewmodel.binanceStock.BinanceStockGetVm
   redis:
     host: localhost
     port: 6379

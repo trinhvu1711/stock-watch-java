@@ -8,8 +8,7 @@ import com.trinhvu.stock.repository.StockRepository;
 import com.trinhvu.stock.service.StockPriceService;
 import com.trinhvu.stock.service.StockService;
 import com.trinhvu.stock.utils.Constants;
-import com.trinhvu.stock.viewmodel.StocksGetVm;
-import com.trinhvu.stock.viewmodel.StocksPriceGetVm;
+import com.trinhvu.stock.viewmodel.stock.StocksPriceGetVm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -40,8 +39,9 @@ public class StockPriceScheduler {
                     new NotFoundException(Constants.ErrorCode.STOCK_NOT_FOUND, symbol));;
             StockPrice stockPrice = getNewPrice(stock);
             stock.getStockPrices().add(stockPrice);
-            StocksGetVm stocksGetVm = StocksGetVm.fromModel(stockRepository.save(stock));
-            stockProducer.sendStockPriceUpdate(stocksGetVm);
+//            StocksGetVm stocksGetVm = StocksGetVm.fromModel(stockRepository.save(stock));
+            StocksPriceGetVm stocksPriceGetVm = StocksPriceGetVm.fromModel(stockPrice);
+            stockProducer.sendStockPriceUpdate(stocksPriceGetVm);
         }
     }
 

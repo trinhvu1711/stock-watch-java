@@ -49,5 +49,11 @@ spring:
           uri: lb://CART-SERVICE
           predicates:
             - Path=/api/v1/carts/**
+#        - id: websocket
+#          uri: lb://STOCK-SERVICE
+#          predicates:
+#            - Path=/ws-stock-updates
+#          filters:
+#            - StripPrefix=1
 server:
   port: 8222
