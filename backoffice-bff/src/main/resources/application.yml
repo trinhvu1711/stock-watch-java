@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: backoffice-bff
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:9098/realms/st
+        registration:
+          api-client:
+            provider: keycloak
+            client-id: backoffice-bff
+            client-secret: TVacLC0cQ8tiiEKiTVerTb2YvwQ1TRJF
+            scope: openid, profile, email, roles
+  cloud:
+    gateway:
+      routes:
+        - id: api
+          uri: http://api.yas.local
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /$\{segment}
+            - TokenRelay=
+        - id: nextjs
+          uri: http://localhost:3000
+          predicates:
+            - Path=/**
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
