@@ -1,6 +1,12 @@
 spring:
   application:
     name: backoffice-bff
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  session:
+    store-type: redis
   security:
     oauth2:
       client:
@@ -16,19 +22,16 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: api
-          uri: http://api.yas.local
+        - id: api_servicename_local
+          uri: http://localhost:8085
           predicates:
             - Path=/api/**
           filters:
             - RewritePath=/api/(?<segment>.*), /$\{segment}
-            - TokenRelay=
+            - TokenRelay=z`
         - id: nextjs
           uri: http://localhost:3000
           predicates:
             - Path=/**
-  data:
-    redis:
-      host: localhost
-      port: 6379
-
+server:
+  port: 6666
