@@ -13,10 +13,20 @@
         <module name="discovery" />
         <module name="payment" />
         <module name="stock" />
+        <module name="common-library" />
         <module name="gateway" />
         <module name="cart" />
         <module name="order" />
         <module name="customer" />
+      </profile>
+      <profile name="Annotation profile for location" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="location" />
       </profile>
     </annotationProcessing>
   </component>
@@ -24,10 +34,12 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="backoffice-bff" options="-parameters" />
       <module name="cart" options="-parameters" />
+      <module name="common-library" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="customer" options="-parameters" />
       <module name="discovery" options="-parameters" />
       <module name="gateway" options="-parameters" />
+      <module name="location" options="-parameters" />
       <module name="notification" options="-parameters" />
       <module name="order" options="-parameters" />
       <module name="payment" options="-parameters" />
