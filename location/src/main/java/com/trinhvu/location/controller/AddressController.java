@@ -6,6 +6,8 @@ import com.trinhvu.location.viewmodel.address.AddressGetVm;
 import com.trinhvu.location.viewmodel.address.AddressPostVm;
 import jakarta.validation.Valid;
 import java.util.List;
+
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

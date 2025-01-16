@@ -1,5 +1,7 @@
 package com.trinhvu.location.config;
 
+
+import java.util.Optional;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,13 +11,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.Optional;
-
 @Configuration
-@EnableJpaRepositories("com.trinhvu.customer.repository")
-@EntityScan({"com.yas.customer.model"})
+@EnableJpaRepositories("com.trinhvu.location.repository")
+@EntityScan("com.trinhvu.location.model")
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 public class DatabaseAutoConfig {
+
     @Bean
     public AuditorAware<String> auditorAware() {
         return () -> {

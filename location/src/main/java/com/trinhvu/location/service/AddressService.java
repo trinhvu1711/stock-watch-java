@@ -12,13 +12,15 @@ import com.trinhvu.location.viewmodel.address.AddressDetailVm;
 import com.trinhvu.location.viewmodel.address.AddressGetVm;
 import com.trinhvu.location.viewmodel.address.AddressPostVm;
 import java.util.List;
+
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
+@Transactional
 public class AddressService {
 
     private final AddressRepository addressRepository;
