@@ -10,4 +10,4 @@ server:
     context-path: /common-library
 
 cors:
-  allowed-origins: *
+  allowed-origins: "*"

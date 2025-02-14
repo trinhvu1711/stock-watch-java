@@ -1,10 +1,13 @@
 spring:
   application:
     name: backoffice-bff
-  data:
-    redis:
-      host: localhost
-      port: 6379
+  threads:
+    virtual:
+      enabled: true
+#  data:
+#    redis:xx
+#      host: localhost
+#      port: 6379
   session:
     store-type: redis
   security:
@@ -12,7 +15,7 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: http://localhost:9098/realms/st
+            issuer-uri: http://localhost:9080/realms/Yas
         registration:
           api-client:
             provider: keycloak
@@ -22,16 +25,16 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: api_servicename_local
-          uri: http://localhost:8085
+        - id: location_service
+          uri: http://localhost:8020
           predicates:
             - Path=/api/**
           filters:
             - RewritePath=/api/(?<segment>.*), /$\{segment}
-            - TokenRelay=z`
+            - TokenRelay=
         - id: nextjs
           uri: http://localhost:3000
           predicates:
             - Path=/**
 server:
-  port: 6666
+  port: 8087

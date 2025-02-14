@@ -4,16 +4,16 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:9098/realms/st
-    datasource:
-      url: jdbc:postgresql://localhost:5432/location
-      username: trinhvu
-      password: password
-      driver-class-name: org.postgresql.Driver
-    jpa:
-      hibernate:
-        ddl-auto: update
-      database: postgresql
-      database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://localhost:5432/location
+    username: trinhvu
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 server:
   port: 8020
 

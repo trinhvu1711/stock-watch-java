@@ -9,8 +9,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @EnableConfigurationProperties(CorsConfig.class)
 public class LocationApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(LocationApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(LocationApplication.class, args);
+    }
 
 }

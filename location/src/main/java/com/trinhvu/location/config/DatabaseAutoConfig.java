@@ -1,6 +1,5 @@
 package com.trinhvu.location.config;
 
-
 import java.util.Optional;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;

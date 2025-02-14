@@ -1,6 +1,55 @@
+#spring:
+#  config:
+#    import: optional:configserver:http://localhost:8888
+#  application:
+#    name: location-service
+#
 spring:
-  config:
-    import: optional:configserver:http://localhost:8888
-  application:
-    name: location-service
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9080/realms/Yas
+  datasource:
+    url: jdbc:postgresql://localhost:5432/location
+    username: trinhvu
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+server:
+  port: 8020
+  servlet:
+    context-path: /location
 
+resilience4j:
+  retry:
+    instances:
+      rest-api:
+        max-attempts: 3
+
+  circuitbreaker:
+    instances:
+      rest-circuit-breaker:
+        sliding-window-type: COUNT_BASED
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        permitted-number-of-calls-in-half-open-state: 3
+
+cors:
+  allowed-origins: "*"
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+    oauth:
+      use-pkce-with-authorization-code-grant: true
+      client-id: swagger-ui
+  packagesToScan: com.trinhvu.location
+  oauthflow:
+    authorization-url: http://localhost:9080/realms/Yas/protocol/openid-connect/auth
+    token-url: http://localhost:9080/realms/Yas/protocol/openid-connect/token
