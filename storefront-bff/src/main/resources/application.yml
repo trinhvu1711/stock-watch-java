@@ -1,0 +1,89 @@
+server:
+  port: 8087
+Spring:
+  application:
+      name: storefront-bff
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:9080/realms/Yas
+        registration:
+          keycloak:
+            provider: keycloak
+            client-id: storefront-bff
+            client-secret: ZrU9I0q2uXBglBnmvyJdkl1lf0ncr8tn #gitleaks:allow
+            scope: openid, profile, email, roles
+
+  cloud:
+    gateway:
+      default-filters:
+        - SaveSession
+      routes:
+        # Changes for your local development should not be committed
+#        location
+      - id: api_location_local
+        uri: http://localhost:8020
+        predicates:
+          - Path=/api/location/**
+        filters:
+          - RewritePath=/api/(?<segment>.*), /$\{segment}
+          - TokenRelay=
+#        cart
+      - id: api_cart_local
+        uri: http://localhost:8090
+        predicates:
+          - Path=/api/cart/**
+        filters:
+          - RewritePath=/api/(?<segment>.*), /$\{segment}
+          - TokenRelay=
+#        customer
+      - id: api_customer_local
+        uri: http://localhost:8088
+        predicates:
+          - Path=/api/customer/**
+        filters:
+          - RewritePath=/api/(?<segment>.*), /$\{segment}
+          - TokenRelay=
+#        order
+      - id: api_order_local
+        uri: http://localhost:8060
+        predicates:
+          - Path=/api/order/**
+        filters:
+          - RewritePath=/api/(?<segment>.*), /$\{segment}
+          - TokenRelay=
+#        payment
+      - id: api_payment_local
+        uri: http://localhost:8070
+        predicates:
+          - Path=/api/payment/**
+        filters:
+          - RewritePath=/api/(?<segment>.*), /$\{segment}
+          - TokenRelay=
+#        stock
+      - id: api_stock_local
+        uri: http://localhost:8050
+        predicates:
+          - Path=/api/stock/**
+        filters:
+          - RewritePath=/api/(?<segment>.*), /$\{segment}
+          - TokenRelay=
+
+      - id: api
+        uri: http://api.yas.local
+        predicates:
+          - Path=/api/**
+        filters:
+          - TokenRelay=
+          - StripPrefix=1
+      - id: nextjs
+        uri: http://localhost:3000
+        predicates:
+          - Path=/**
+yas:
+  services:
+    customer: http://localhost:8087/customer
+    cart: http://localhost:8087/cart
+    token-identity: http://localhost:9080/realms/Yas/protocol/openid-connect/token
