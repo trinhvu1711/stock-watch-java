@@ -5,9 +5,9 @@ spring:
     name: location-service
   liquibase:
     change-log: classpath:/db/changelog/generated-changelog.xml
-    enabled: true
-  datasource:
-    url: jdbc:postgresql://localhost:5432/location
-    username: trinhvu
-    password: password
-    driver-class-name: org.postgresql.Driver
+    enabled: false
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/location
+#    username: trinhvu
+#    password: password
+#    driver-class-name: org.postgresql.Driver

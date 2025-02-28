@@ -8,3 +8,55 @@ spring:
   cloud:
     config:
       override-system-properties: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9080/realms/Yas
+
+resilience4j:
+  retry:
+    instances:
+      rest-api:
+        max-attempts: 3
+
+  circuitbreaker:
+    instances:
+      rest-circuit-breaker:
+        sliding-window-type: COUNT_BASED
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        permitted-number-of-calls-in-half-open-state: 3
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+    oauth:
+      use-pkce-with-authorization-code-grant: true
+      client-id: swagger-ui
+  oauthflow:
+    authorization-url: http://localhost:9080/realms/Yas/protocol/openid-connect/auth
+    token-url: http://localhost:9080/realms/Yas/protocol/openid-connect/token
+
+keycloak:
+  auth-server-url: http://localhost:9080
+  realm: Yas
+  resource: customer-management
+  credentials:
+    secret: NKAr3rnjwm9jlakgKpelukZGFaHYqIWE
+
+cors:
+  allowed-origins: "*"
+
+application:
+  config:
+    customer-url: http://localhost:8087/api/customer
+    payment-url: http://localhost:8087/api/payment
+    location-url: http://localhost:8087/api/location
+    stock-url: http://localhost:8087/api/stock
+    cart-url: http://localhost:8087/api/cart
+    checkout-url: http://localhost:8087/api/checkout
+    order-url: http://localhost:8087/api/order
+    alpha-vantage-url: https://www.alphavantage.co
+    api-key: LLD9XG573FUU3OCH
