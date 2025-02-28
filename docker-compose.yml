@@ -122,6 +122,49 @@ services:
       - rs-net
     command:
       - "start-dev"
+
+  keycloak_test:
+    container_name: rs_keycloak_test
+    image: quay.io/keycloak/keycloak:24.0.2
+    ports:
+      - 9080:8080
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    volumes:
+      - ./identity/realm-export.json:/opt/keycloak/data/import/realm-export.json
+      - ./identity/themes:/opt/keycloak/themes
+    networks:
+      - rs-net
+    command: 'start-dev --import-realm'
+
+  keycloak_dev:
+    container_name: rs_keycloak_dev
+    image: quay.io/keycloak/keycloak:24.0.2
+    ports:
+      - 9090:8080
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    networks:
+      - rs-net
+    command:
+      - "start-dev"
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui:v5.17.14
+    container_name: rs_swagger_ui
+    ports:
+      - "8082:8080"
+    environment:
+      SWAGGER_JSON: /swagger-api.yaml
+      BASE_URL: /swagger-ui
+      URLS: '[{"name": "API", "url": "http://localhost:8080/v3/api-docs"}]'
+      OAUTH_CLIENT_ID: swagger-ui
+      OAUTH_USE_PKCE: "true"
+    networks:
+      - rs-net
+
 networks:
   rs-net:
     driver: bridge

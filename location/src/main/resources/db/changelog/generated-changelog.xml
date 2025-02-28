@@ -1,0 +1,72 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="Vu (generated)" id="1739850236682-1">
+        <createTable tableName="country">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="country_pkey"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="created_on" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column name="last_modified_on" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="code2" type="VARCHAR(3)"/>
+            <column name="code3" type="VARCHAR(3)"/>
+            <column name="is_billing_enabled" type="BOOLEAN"/>
+            <column name="is_city_enabled" type="BOOLEAN"/>
+            <column name="is_district_enabled" type="BOOLEAN"/>
+            <column name="is_shipping_enabled" type="BOOLEAN"/>
+            <column name="is_zip_code_enabled" type="BOOLEAN"/>
+            <column name="name" type="VARCHAR(450)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Vu (generated)" id="1739850236682-2">
+        <createTable tableName="district">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="district_pkey"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="created_on" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column name="last_modified_on" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="location" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(450)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(450)"/>
+            <column name="state_or_province_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Vu (generated)" id="1739850236682-3">
+        <createTable tableName="state_or_province">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="state_or_province_pkey"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="created_on" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column name="last_modified_on" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="code" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(450)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(255)"/>
+            <column name="country_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Vu (generated)" id="1739850236682-4">
+        <addForeignKeyConstraint baseColumnNames="state_or_province_id" baseTableName="district" constraintName="fk4p5tupsp46px75t2ps6sscltr" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="state_or_province" validate="true"/>
+    </changeSet>
+    <changeSet author="Vu (generated)" id="1739850236682-5">
+        <addForeignKeyConstraint baseColumnNames="country_id" baseTableName="state_or_province" constraintName="fkjwtnal6qv8uhnresx6y9ygpub" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="country" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

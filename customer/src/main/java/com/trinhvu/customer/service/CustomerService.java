@@ -108,8 +108,7 @@ public class CustomerService {
         return new GuestVm(userId, guestEmail, GUEST);
     }
 
-    public void updateProfile(CustomerPutVm customerVm) {
-        String id = SecurityContextHolder.getContext().getAuthentication().getName();
+    public void updateProfile(String id, CustomerPutVm customerVm) {
         UserRepresentation user =
                 keycloak.realm(keycloakPropsConfig.getRealm()).users()
                         .get(id).toRepresentation();
@@ -142,5 +141,15 @@ public class CustomerService {
         random.nextBytes(bytes);
         Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
         return encoder.encodeToString(bytes);
+    }
+
+    public void deleteCustomer(String id) {
+        UserRepresentation user = keycloak.realm(keycloakPropsConfig.getRealm()).users().get(id).toRepresentation();
+        if (user != null) {
+            RealmResource realmResource = keycloak.realm(keycloakPropsConfig.getRealm());
+            UserResource userResource = realmResource.users().get(user.getId());
+            user.setEnabled(false);
+            userResource.update(user);
+        }else throw new NotFoundException(Constants.ErrorCode.USER_NOT_FOUND);
     }
 }

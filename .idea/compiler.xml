@@ -9,7 +9,10 @@
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
         <module name="notification" />
+        <module name="backoffice-bff" />
         <module name="discovery" />
+        <module name="backoffice-bff (1)" />
+        <module name="storefront-bff" />
         <module name="payment" />
         <module name="stock" />
         <module name="gateway" />
@@ -17,22 +20,46 @@
         <module name="order" />
         <module name="customer" />
       </profile>
+      <profile name="Annotation profile for location" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
+        </processorPath>
+        <module name="location" />
+      </profile>
+      <profile name="Annotation profile for common-library" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
+        </processorPath>
+        <module name="common-library" />
+      </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="customer" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="backoffice-bff" options="-parameters" />
+      <module name="backoffice-bff (1)" options="-parameters" />
       <module name="cart" options="-parameters" />
+      <module name="common-library" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="customer" options="-parameters" />
       <module name="discovery" options="-parameters" />
       <module name="gateway" options="-parameters" />
+      <module name="location" options="-parameters" />
       <module name="notification" options="-parameters" />
       <module name="order" options="-parameters" />
       <module name="payment" options="-parameters" />
       <module name="stock" options="-parameters" />
+      <module name="storefront-bff" options="-parameters" />
     </option>
   </component>
 </project>

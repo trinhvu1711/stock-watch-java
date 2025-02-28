@@ -1,0 +1,81 @@
+spring:
+  application:
+    name: backoffice-bff
+  threads:
+    virtual:
+      enabled: true
+#  data:
+#    redis:xx
+#      host: localhost
+#      port: 6379
+  session:
+    store-type: redis
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:9080/realms/Yas
+        registration:
+          api-client:
+            provider: keycloak
+            client-id: backoffice-bff
+            client-secret: TVacLC0cQ8tiiEKiTVerTb2YvwQ1TRJF
+            scope: openid, profile, email, roles
+  cloud:
+    gateway:
+      routes:
+        #        location
+        - id: api_location_local
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/location/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /$\{segment}
+            - TokenRelay=
+        #        cart
+        - id: api_cart_local
+          uri: http://localhost:8090
+          predicates:
+            - Path=/api/cart/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /$\{segment}
+            - TokenRelay=
+        #        customer
+        - id: api_customer_local
+          uri: http://localhost:8088
+          predicates:
+            - Path=/api/customer/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /$\{segment}
+            - TokenRelay=
+        #        order
+        - id: api_order_local
+          uri: http://localhost:8060
+          predicates:
+            - Path=/api/order/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /$\{segment}
+            - TokenRelay=
+        #        payment
+        - id: api_payment_local
+          uri: http://localhost:8070
+          predicates:
+            - Path=/api/payment/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /$\{segment}
+            - TokenRelay=
+        #        stock
+        - id: api_stock_local
+          uri: http://localhost:8050
+          predicates:
+            - Path=/api/stock/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /$\{segment}
+            - TokenRelay=
+        - id: nextjs
+          uri: http://localhost:3000
+          predicates:
+            - Path=/**
+server:
+  port: 8086

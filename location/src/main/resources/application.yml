@@ -1,0 +1,13 @@
+spring:
+  config:
+    import: optional:configserver:http://localhost:8888
+  application:
+    name: location-service
+  liquibase:
+    change-log: classpath:/db/changelog/generated-changelog.xml
+    enabled: false
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/location
+#    username: trinhvu
+#    password: password
+#    driver-class-name: org.postgresql.Driver
