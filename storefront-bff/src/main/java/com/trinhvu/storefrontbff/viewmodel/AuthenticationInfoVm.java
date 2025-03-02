@@ -1,4 +1,4 @@
 package com.trinhvu.storefrontbff.viewmodel;
 
-public record AuthenticationInfoVm() {
+public record AuthenticationInfoVm(boolean isAuthenticated, AuthenticatedUser authenticatedUser) {
 }

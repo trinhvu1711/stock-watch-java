@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 
 @SpringBootApplication
 @EnableWebFluxSecurity
-@EnableConfigurationProperties(ServiceUrlConfig.class)
+//@EnableConfigurationProperties(ServiceUrlConfig.class)
 public class StorefrontBffApplication {
 
     public static void main(String[] args) {

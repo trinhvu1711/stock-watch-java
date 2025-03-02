@@ -18,3 +18,6 @@ server:
 springdoc:
   packagesToScan: com.trinhvu.customer
 
+yas:
+  services:
+    location: http://localhost:8087/api/location

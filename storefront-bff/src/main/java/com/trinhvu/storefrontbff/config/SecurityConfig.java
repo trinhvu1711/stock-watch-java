@@ -36,9 +36,12 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         return http
+                .cors(Customizer.withDefaults())
+                // authenticate for each link had defined, route to keycloak for login
                 .authorizeExchange(auth -> auth
                         .pathMatchers("/profile/**").authenticated()
                         .pathMatchers("/address/**").authenticated()
+                        .pathMatchers("/authentication/**").authenticated()
                         .anyExchange().permitAll())
                 .oauth2Login(Customizer.withDefaults())
                 .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
