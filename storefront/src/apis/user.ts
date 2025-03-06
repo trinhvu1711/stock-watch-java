@@ -96,7 +96,11 @@ export const hasFollowed = async (id: string): Promise<boolean> => {
 //-----------------test storefront api--------------------
 export const storefrontAuth = async (): Promise<IStoreFrontAuthResponse> => {
   try {
-    const { data } = await axiosInstance.get(endpoints.store_front_auth.get);
+    const { data } = await axiosInstance.get(
+      'http://localhost:8087/authentication'
+    );
+    console.log('🚀 ~ storefrontAuth ~ data:', data);
+
     return data as IStoreFrontAuthResponse;
   } catch (error) {
     console.log('error', error);

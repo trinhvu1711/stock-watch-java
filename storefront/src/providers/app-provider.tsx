@@ -12,6 +12,7 @@ export default function AppProviders({ children }: AppProvidersProps) {
   return (
     <QueryProvider>
       <AuthProvider>{children}</AuthProvider>
+      {/* {children} */}
     </QueryProvider>
   );
 }

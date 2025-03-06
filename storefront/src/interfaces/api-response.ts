@@ -11,7 +11,7 @@ export interface IApiResponse<T> {
 }
 
 export interface IAuthInfoUser {
-  userName: string;
+  username: string;
 }
 
 export interface IStoreFrontAuthResponse {

@@ -1,7 +1,7 @@
 'use client';
 
 import axios, { AxiosRequestConfig } from 'axios';
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { STORE_FRONT_API } from '../global-config';
 
@@ -17,20 +17,20 @@ axiosInstance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// axiosInstance.interceptors.response.use(
-//   (res) => res,
-//   (error) => {
-//     if (error.response && error.response.status === 401) {
-//       if (typeof window !== 'undefined') {
-//         const router = useRouter();
-//         router.push('/login');
-//       }
-//     }
-//     return Promise.reject(
-//       (error.response && error.response.data) || 'Something went wrong'
-//     );
-//   }
-// );
+axiosInstance.interceptors.response.use(
+  (res) => res,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      if (typeof window !== 'undefined') {
+        const router = useRouter();
+        router.push('/api/auth/signin');
+      }
+    }
+    return Promise.reject(
+      (error.response && error.response.data) || 'Something went wrong'
+    );
+  }
+);
 
 export default axiosInstance;
 
@@ -100,7 +100,7 @@ export const endpoints = {
   },
 
   store_front_auth: {
-    get: `/authentication`,
+    get: `${STORE_FRONT_API}/authentication`,
   },
 };
 

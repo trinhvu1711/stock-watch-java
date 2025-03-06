@@ -39,8 +39,8 @@ export default function Test() {
     <div>
       <h1>Thông Tin Profile</h1>
       {/* Hiển thị dữ liệu profile, ví dụ: */}
-      <p>IsAuthenticated: {profile.isAuthenticated}</p>
-      <p>Username: {profile.authenticatedUser.userName}</p>
+      <p>IsAuthenticated: {profile.isAuthenticated ? 'true' : 'false'}</p>
+      <p>Username: {profile.authenticatedUser.username}</p>
     </div>
   );
 }
